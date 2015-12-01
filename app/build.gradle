@@ -22,4 +22,10 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile('in.srain.cube:cube-sdk:1.0.44.33-SNAPSHOT@aar') {
+        exclude group: 'in.srain.cube', module: 'clog'
+    }
+    compile 'com.squareup.okhttp:okhttp:2.6.0'
 }

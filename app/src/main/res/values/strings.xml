@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="loading">加载中…</string>
+    <string name="load_all">没有更多了t_t</string>
 </resources>
