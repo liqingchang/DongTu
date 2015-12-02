@@ -6,46 +6,50 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import com.android.dongtu.FragmentCallback;
 import com.android.dongtu.R;
 import com.android.dongtu.ThreadManager;
-import com.android.dongtu.adapter.AbstractAlbumAdapter;
+import com.android.dongtu.adapter.AlbumSummaryAdapter;
 import com.android.dongtu.data.BaseLoader;
-import com.android.dongtu.data.ILoader;
-import com.android.dongtu.ui.view.LoadMoreFootView;
+import com.android.dongtu.data.AbstractLoader;
 
 import java.lang.ref.WeakReference;
 
 import in.srain.cube.util.LocalDisplay;
-import in.srain.cube.views.GridViewWithHeaderAndFooter;
-import in.srain.cube.views.loadmore.LoadMoreContainer;
-import in.srain.cube.views.loadmore.LoadMoreHandler;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
 
 /**
- * 下拉刷新 底部加载 动态加载图片
- * Created by kuroterry on 15/11/15.
+ * Material Design风格的GridView显示图片尝试
+ * Created by kuroterry on 15/12/2.
  */
 public abstract class AbstractAlbumFragment extends Fragment {
 
     private static final int MSG_LOADMORE = 1;
 
-    private PtrClassicFrameLayout ptrFrameLayout;
-    protected GridViewWithHeaderAndFooter grvPics;
-    protected LoadMoreContainer loadMoreContainer;
-    protected AbstractAlbumAdapter adapter;
-    protected ILoader iLoader;
-    private AlbumFragmentHandler handler;
-    private LoadMoreFootView loadMoreFootView;
+    protected RecyclerView revAlbum;
+    protected AlbumSummaryAdapter adapter;
+    protected AbstractLoader abstractLoader;
     protected FragmentCallback callback;
+    private AlbumFragmentHandler handler;
+    private GridLayoutManager gridLayoutManager;
+    /**
+     * 是否加载中,避免多次加载
+     */
+    protected boolean isLoading;
+    private Runnable loadMoreRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Message message = handler.obtainMessage();
+            message.obj = load();
+            message.what = MSG_LOADMORE;
+            handler.sendMessage(message);
+        }
+    };
 
     public abstract Object load();
 
@@ -60,78 +64,54 @@ public abstract class AbstractAlbumFragment extends Fragment {
 
     public abstract void loadMore(Message message);
 
-    private Runnable loadMoreRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Message message = handler.obtainMessage();
-            message.obj = load();
-            message.what = MSG_LOADMORE;
-            handler.sendMessage(message);
-        }
-    };
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-           callback = (FragmentCallback)context;
+            callback = (FragmentCallback)context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement FragmentCallback");
         }
         LocalDisplay.init(context);
-        iLoader = new BaseLoader();
+        abstractLoader = new BaseLoader();
         initAdapter();
         handler = new AlbumFragmentHandler(this);
-        loadMoreFootView = new LoadMoreFootView(context);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_album, null);
+        View view = inflater.inflate(R.layout.fragment_pics, null);
         init(view);
         return view;
     }
 
     private void init(View view) {
-        ptrFrameLayout = (PtrClassicFrameLayout) view.findViewById(R.id.ptr_frame_albumcover);
-        ptrFrameLayout.setLoadingMinTime(1000);
-        ptrFrameLayout.setPtrHandler(new PtrHandler() {
+        gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
+        revAlbum = (RecyclerView) view.findViewById(R.id.rev_pics);
+        adapter.setOnGetViewListener(new AlbumSummaryAdapter.OnGetViewListener() {
             @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout ptrFrameLayout, View view, View header) {
-                return PtrDefaultHandler.checkContentCanBePulledDown(ptrFrameLayout, grvPics, header);
-            }
-
-            @Override
-            public void onRefreshBegin(final PtrFrameLayout ptrFrameLayout) {
-                ptrFrameLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ptrFrameLayout.refreshComplete();
-                    }
-                }, 500);
+            public void onBindView(int position) {
+                getMoreImagesIfNeeded(position, adapter.getItemCount());
             }
         });
-
-        loadMoreContainer = (LoadMoreContainer) view.findViewById(R.id.loadmore_container);
-        loadMoreContainer.setLoadMoreView(loadMoreFootView);
-        loadMoreContainer.setLoadMoreUIHandler(loadMoreFootView);
-        loadMoreContainer.setLoadMoreHandler(new LoadMoreHandler() {
-            @Override
-            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                ThreadManager.runBg(loadMoreRunnable);
-            }
-        });
-        // 参数1表示列表是否为空 参数2表示是否有更多内容 基本上就参数2有用
-        loadMoreContainer.loadMoreFinish(false, true);
-
-        grvPics = (GridViewWithHeaderAndFooter) view.findViewById(R.id.grv_albumcover);
-        grvPics.setAdapter(adapter);
-        afterInit(view);
+        revAlbum.setAdapter(adapter);
+        revAlbum.setLayoutManager(gridLayoutManager);
 
         // 加载一次数据
         ThreadManager.runBg(loadMoreRunnable);
+    }
 
+    /**
+     * 判断是否需要加载更多数据
+     */
+    private void getMoreImagesIfNeeded(int position, int totalItemCount) {
+        int defaultNumberOfItemsPerPage = abstractLoader.getDefaultCount();
+        boolean shouldLoadMore = position >= totalItemCount - (defaultNumberOfItemsPerPage / 2);
+        if (shouldLoadMore && !isLoading && adapter != null && adapter.getItemCount() > 0) {
+            // 获取更多数据
+            ThreadManager.runBg(loadMoreRunnable);
+        }
     }
 
     private static class AlbumFragmentHandler extends Handler {

@@ -14,16 +14,15 @@ import java.util.List;
 /**
  * Created by kuroterry on 15/11/28.
  */
-public class BaseLoader implements ILoader {
+public class BaseLoader extends AbstractLoader {
 
     public static final String ALBUM_URL = "http://4gun.net/api/v1/albums";
     public static final String ALBUM_DETAIL_URL = "http://4gun.net/api/v1/photos?press=%1$s&beg=0&max=100&album_name=%2$s";
 
-    public static final int DEFAULT_COUNT = 8;
 
     @Override
     public List<AlbumSummary> loadAlbumSummary() {
-        return loadAlbumSummary(DEFAULT_COUNT);
+        return loadAlbumSummary(getDefaultCount());
     }
 
     @Override

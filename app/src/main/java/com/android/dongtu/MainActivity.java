@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
             fragmentTransaction.replace(R.id.frm_container, fragment);
         } else {
             fragmentTransaction.add(R.id.frm_container, fragment);
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
-        fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
     }
 

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by kuroterry on 15/11/28.
  */
-public class DemoLoader implements ILoader {
+public class DemoLoader extends AbstractLoader {
 
 	private final static String[] imageUrls = new String[]{
 			"http://img4.duitang.com/uploads/blog/201311/04/20131104193715_NCexN.thumb.jpeg",
@@ -134,7 +134,7 @@ public class DemoLoader implements ILoader {
 
 	@Override
 	public List<AlbumSummary> loadAlbumSummary() {
-		return loadAlbumSummary(8);
+		return loadAlbumSummary(getDefaultCount());
 	}
 
 	@Override

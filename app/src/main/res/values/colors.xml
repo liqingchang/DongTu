@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--基本色定义-->
+    <color name="Purple">#b39ddb</color>
+    <color name="Purple.Dark">#673ab7</color>
+
+    <!--主色调定义-->
+    <color name="colorPrimary">@color/Purple</color>
+    <color name="colorPrimaryDark">@color/Purple.Dark</color>
+
+</resources>
