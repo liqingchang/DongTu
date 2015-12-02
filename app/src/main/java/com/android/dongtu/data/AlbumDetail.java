@@ -1,5 +1,6 @@
 package com.android.dongtu.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,12 +8,15 @@ import java.util.List;
  * 相册详情内容
  * Created by kuroterry on 15/11/30.
  */
-public class AlbumDetail {
+public class AlbumDetail implements Serializable {
 
 	private AlbumSummary albumSummary;
 
-	private List<String> pics;
+	public List<String> pics;
 
+	public AlbumDetail(){
+
+	}
 
 	public AlbumDetail(AlbumSummary albumSummary) {
 		this.albumSummary = albumSummary;
