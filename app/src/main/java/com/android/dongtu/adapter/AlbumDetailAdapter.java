@@ -73,6 +73,11 @@ public class AlbumDetailAdapter extends AbstractAlbumAdapter {
         notifyDataSetChanged();
     }
 
+    @Override
+    public Object getData() {
+        return data;
+    }
+
     public interface OnGetViewListener {
         void onBindView(int position);
     }

@@ -15,9 +15,10 @@ import android.view.ViewGroup;
 import com.android.dongtu.FragmentCallback;
 import com.android.dongtu.R;
 import com.android.dongtu.ThreadManager;
+import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumSummaryAdapter;
-import com.android.dongtu.data.BaseLoader;
 import com.android.dongtu.data.AbstractLoader;
+import com.android.dongtu.data.BaseLoader;
 
 import java.lang.ref.WeakReference;
 
@@ -32,7 +33,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
     private static final int MSG_LOADMORE = 1;
 
     protected RecyclerView revAlbum;
-    protected AlbumSummaryAdapter adapter;
+    protected AbstractAlbumAdapter adapter;
     protected AbstractLoader abstractLoader;
     protected FragmentCallback callback;
     private AlbumFragmentHandler handler;
@@ -97,7 +98,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
         });
         revAlbum.setAdapter(adapter);
         revAlbum.setLayoutManager(gridLayoutManager);
-
+        afterInit(view);
         // 加载一次数据
         ThreadManager.runBg(loadMoreRunnable);
     }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 
-import com.android.dongtu.adapter.AlbumSummaryAdapter;
+import com.android.dongtu.adapter.AlbumDetailAdapter;
 import com.android.dongtu.data.AlbumSummary;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
 
     @Override
     public void initAdapter() {
-        adapter = new AlbumSummaryAdapter();
+        adapter = new AlbumDetailAdapter();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
 
     @Override
     public void loadMore(Message message) {
-        List<AlbumSummary> data = (List<AlbumSummary>) message.obj;
+        List<String> data = (List<String>) message.obj;
         adapter.add(data);
     }
 

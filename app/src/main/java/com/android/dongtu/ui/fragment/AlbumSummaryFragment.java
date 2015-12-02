@@ -3,6 +3,8 @@ package com.android.dongtu.ui.fragment;
 import android.os.Message;
 import android.view.View;
 
+import com.android.dongtu.MainActivity;
+import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumSummaryAdapter;
 import com.android.dongtu.data.AlbumSummary;
 
@@ -28,7 +30,12 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
 
     @Override
     public void afterInit(View view) {
-
+        adapter.setOnItemClickListener(new AbstractAlbumAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                callback.onFragmentCallback(MainActivity.MAIN_ALBUMDETAIL, ((List<AlbumSummary>) adapter.getData()).get(position));
+            }
+        });
     }
 
     @Override

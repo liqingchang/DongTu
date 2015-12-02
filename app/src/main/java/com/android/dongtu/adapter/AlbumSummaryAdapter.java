@@ -1,7 +1,6 @@
 package com.android.dongtu.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.LinearLayout;
 
 import com.android.dongtu.R;
 import com.android.dongtu.data.AlbumSummary;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -24,21 +22,11 @@ import in.srain.cube.util.LocalDisplay;
 public class AlbumSummaryAdapter extends AbstractAlbumAdapter {
 
     public List<AlbumSummary> data;
-    private DisplayImageOptions options;
-    private OnGetViewListener onGetViewListener;
     public static final int sGirdImageSize = (LocalDisplay.SCREEN_WIDTH_PIXELS - LocalDisplay.dp2px(12 + 12 + 10)) / 2;
 
     public AlbumSummaryAdapter() {
+        super();
         data = new ArrayList<AlbumSummary>();
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.bg_gray)
-//                .showImageForEmptyUri(R.drawable.ic_empty)
-//                .showImageOnFail(R.drawable.ic_error)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
     }
 
     @Override
@@ -75,12 +63,10 @@ public class AlbumSummaryAdapter extends AbstractAlbumAdapter {
         notifyDataSetChanged();
     }
 
-    public interface OnGetViewListener {
-        void onBindView(int position);
+    @Override
+    public Object getData() {
+        return data;
     }
 
-    public void setOnGetViewListener(OnGetViewListener onGetViewListener) {
-        this.onGetViewListener = onGetViewListener;
-    }
 
 }
