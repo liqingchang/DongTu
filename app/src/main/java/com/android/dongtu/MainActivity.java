@@ -8,13 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.dongtu.data.AlbumDetail;
 import com.android.dongtu.data.AlbumSummary;
 import com.android.dongtu.ui.fragment.AlbumDetailFragment;
 import com.android.dongtu.ui.fragment.AlbumSummaryFragment;
+import com.android.dongtu.ui.fragment.PhotoFragment;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FragmentCallback {
 
     public static final int MAIN_ALBUMDETAIL = 0;
+    public static final int MAIN_ALBUMPHOTO =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +52,22 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
 
     @Override
     public void onFragmentCallback(int code, Object data) {
-        AlbumSummary albumSummary = (AlbumSummary) data;
-        AlbumDetailFragment fragment = AlbumDetailFragment.instance(albumSummary);
-        addFragment(fragment, false);
+        Fragment fragment = null;
+        switch(code) {
+            case MAIN_ALBUMDETAIL:
+                AlbumSummary albumSummary = (AlbumSummary) data;
+                fragment = AlbumDetailFragment.instance(albumSummary);
+                break;
+            case MAIN_ALBUMPHOTO:
+                List<String> photoUrl = (List<String>) data;
+                AlbumDetail albumDetail = new AlbumDetail();
+                albumDetail.pics = photoUrl;
+                fragment = PhotoFragment.instance(albumDetail, 0);
+                break;
+        }
+        if(fragment != null) {
+            addFragment(fragment, false);
+        }
     }
 
     private void addFragment(Fragment fragment, boolean isReplace) {

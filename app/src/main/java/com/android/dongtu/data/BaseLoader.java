@@ -62,7 +62,9 @@ public class BaseLoader extends AbstractLoader {
                 JSONObject data = jsonObject.getJSONObject("data");
                 JSONArray photos = data.getJSONArray("photos");
                 for (int i = 0; i < photos.length(); i++) {
-                    String photoUrl = photos.getString(i);
+                    JSONObject photoJSONObject = photos.getJSONObject(i);
+                    String photoUrl = photoJSONObject.getString("url");
+                    String id = photoJSONObject.getString("id");
                     albumDetail.addPhotos(photoUrl);
                 }
                 Log.i("terry", "size:" + albumDetail.getPics().size());

@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 
+import com.android.dongtu.MainActivity;
+import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumDetailAdapter;
+import com.android.dongtu.data.AlbumDetail;
 import com.android.dongtu.data.AlbumSummary;
 
 import java.util.List;
@@ -51,12 +54,19 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
 
     @Override
     public void afterInit(View view) {
+        adapter.setOnItemClickListener(new AbstractAlbumAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                callback.onFragmentCallback(MainActivity.MAIN_ALBUMPHOTO, adapter.getData());
+            }
+        });
 
     }
 
     @Override
     public void loadMore(Message message) {
-        List<String> data = (List<String>) message.obj;
+        AlbumDetail albumDetail = (AlbumDetail) message.obj;
+        List<String> data = albumDetail.getPics();
         adapter.add(data);
     }
 
