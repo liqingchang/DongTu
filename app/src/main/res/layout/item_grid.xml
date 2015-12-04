@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:paddingBottom="15dp"
     auto:overlay="?android:attr/selectableItemBackground"
+    android:transitionName="@string/transition_photo"
     >
 
     <LinearLayout

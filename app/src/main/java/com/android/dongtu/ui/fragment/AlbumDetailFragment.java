@@ -1,11 +1,16 @@
 package com.android.dongtu.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.view.View;
 
-import com.android.dongtu.MainActivity;
+import com.android.dongtu.PhotoActivity;
+import com.android.dongtu.R;
 import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumDetailAdapter;
 import com.android.dongtu.data.AlbumDetail;
@@ -57,7 +62,18 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
         adapter.setOnItemClickListener(new AbstractAlbumAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                callback.onFragmentCallback(MainActivity.MAIN_ALBUMPHOTO, adapter.getData());
+                String transitionName = getString(R.string.transition_photo);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                        Pair.create(view.findViewById(R.id.imv_cover), transitionName)
+                );
+                Intent intent = new Intent(getActivity(), PhotoActivity.class);
+                intent.setAction(Intent.ACTION_VIEW);
+                Bundle bundle = new Bundle();
+                AlbumDetail albumDetail = new AlbumDetail();
+                albumDetail.pics = (List<String>) adapter.getData();
+                bundle.putSerializable(PhotoActivity.KEY_DETAIL, albumDetail);
+                intent.putExtras(bundle);
+                ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
             }
         });
 
