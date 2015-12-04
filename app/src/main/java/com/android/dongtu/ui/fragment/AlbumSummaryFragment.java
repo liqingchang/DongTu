@@ -33,7 +33,7 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
         adapter.setOnItemClickListener(new AbstractAlbumAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                callback.onFragmentCallback(MainActivity.MAIN_ALBUMDETAIL, ((List<AlbumSummary>) adapter.getData()).get(position));
+                callback.onFragmentCallback(MainActivity.MAIN_ALBUMDETAIL,view,  ((List<AlbumSummary>) adapter.getData()).get(position));
             }
         });
     }

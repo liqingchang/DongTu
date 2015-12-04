@@ -1,5 +1,7 @@
 package com.android.dongtu;
 
+import android.view.View;
+
 /**
  * Fragment->Activity的回调
  * 当Fragment需要回调Activity信息的时候，只需要定义FragmentCallback的对象，
@@ -9,6 +11,6 @@ package com.android.dongtu;
  */
 public interface FragmentCallback {
 
-    public void onFragmentCallback(int code, Object data);
+    public void onFragmentCallback(int code, View view, Object data);
 
 }

@@ -6,4 +6,6 @@
 
     <string name="loading">加载中…</string>
     <string name="load_all">没有更多了t_t</string>
+
+    <string name="transition_photo">transition_photo</string>
 </resources>
