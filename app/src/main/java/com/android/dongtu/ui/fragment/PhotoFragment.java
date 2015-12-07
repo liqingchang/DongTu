@@ -53,7 +53,7 @@ public class PhotoFragment extends Fragment {
             data = (AlbumDetail) args.getSerializable(ARG_DATA);
             position = args.getInt(ARG_POSITION);
         }
-        adapter = new PhotoAdapter(data.getPics());
+        adapter = new PhotoAdapter(data.getAllPics());
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.bg_gray)
 //                .showImageForEmptyUri(R.drawable.ic_empty)
@@ -84,8 +84,9 @@ public class PhotoFragment extends Fragment {
         LinearLayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
         viewPager.setLayoutManager(layout);
         viewPager.setAdapter(new RecyclerViewPagerAdapter(viewPager, adapter));
+        viewPager.scrollToPosition(position);
         imvTransition = (ImageView) view.findViewById(R.id.imv_trans);
-        ImageLoader.getInstance().displayImage(data.getPics().get(0), imvTransition, options, new SimpleImageLoadingListener());
+        ImageLoader.getInstance().displayImage(data.getAllPics().get(position), imvTransition, options, new SimpleImageLoadingListener());
     }
 
 }
