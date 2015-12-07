@@ -133,12 +133,12 @@ public class DemoLoader extends AbstractLoader {
 	private int index = 0;
 
 	@Override
-	public List<AlbumSummary> loadAlbumSummary() {
-		return loadAlbumSummary(getDefaultCount());
+	public Albums loadAlbumSummary(String lastId) {
+		return loadAlbumSummary(lastId, getDefaultCount());
 	}
 
 	@Override
-	public List<AlbumSummary> loadAlbumSummary(int size) {
+	public Albums loadAlbumSummary(String lastId, int size) {
 		List<AlbumSummary> albumCover = new ArrayList<>();
 		AlbumSummary albumSummary;
 		for(int i = index; i < (index + size) ; i++) {
@@ -148,7 +148,9 @@ public class DemoLoader extends AbstractLoader {
 			albumCover.add(albumSummary);
 		}
 		index = index + size;
-		return albumCover;
+		Albums albums = new Albums();
+		albums.albumSummaries = albumCover;
+		return albums;
 	}
 
 	@Override

@@ -28,4 +28,5 @@ public class AlbumSummary implements Serializable{
 	 * 模特
 	 */
 	public String model;
+
 }

@@ -24,7 +24,6 @@ public class AlbumDetailAdapter extends AbstractAlbumAdapter {
 
     public List<String> data;
     private DisplayImageOptions options;
-    private OnGetViewListener onGetViewListener;
     public static final int sGirdImageSize = (LocalDisplay.SCREEN_WIDTH_PIXELS - LocalDisplay.dp2px(12 + 12 + 10)) / 2;
 
     public AlbumDetailAdapter() {
@@ -80,10 +79,6 @@ public class AlbumDetailAdapter extends AbstractAlbumAdapter {
 
     public interface OnGetViewListener {
         void onBindView(int position);
-    }
-
-    public void setOnGetViewListener(OnGetViewListener onGetViewListener) {
-        this.onGetViewListener = onGetViewListener;
     }
 
 }

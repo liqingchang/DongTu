@@ -7,6 +7,7 @@ import com.android.dongtu.MainActivity;
 import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumSummaryAdapter;
 import com.android.dongtu.data.AlbumSummary;
+import com.android.dongtu.data.Albums;
 
 import java.util.List;
 
@@ -18,7 +19,12 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
     @Override
     public Object load() {
         isLoading = true;
-        Object object = abstractLoader.loadAlbumSummary();
+        Object object;
+        if (lastData != null && lastData instanceof Albums) {
+            object = abstractLoader.loadAlbumSummary(((Albums) lastData).getLastId());
+        } else {
+            object = abstractLoader.loadAlbumSummary(null);
+        }
         isLoading = false;
         return object;
     }
@@ -33,15 +39,19 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
         adapter.setOnItemClickListener(new AbstractAlbumAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                callback.onFragmentCallback(MainActivity.MAIN_ALBUMDETAIL,view,  ((List<AlbumSummary>) adapter.getData()).get(position));
+                callback.onFragmentCallback(MainActivity.MAIN_ALBUMDETAIL, view, ((List<AlbumSummary>) adapter.getData()).get(position));
             }
         });
     }
 
     @Override
     public void loadMore(Message message) {
-        List<AlbumSummary> data = (List<AlbumSummary>) message.obj;
-        adapter.add(data);
+        if (!isLoading && message.obj != null) {
+            Albums albums = (Albums) message.obj;
+            lastData = albums;
+            List<AlbumSummary> data = albums.albumSummaries;
+            adapter.add(data);
+        }
     }
 
 }

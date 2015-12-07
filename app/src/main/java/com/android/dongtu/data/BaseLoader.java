@@ -17,25 +17,29 @@ import java.util.List;
 public class BaseLoader extends AbstractLoader {
 
     public static final String ALBUM_URL = "http://4gun.net/api/v1/albums";
-    public static final String ALBUM_DETAIL_URL = "http://4gun.net/api/v1/photos?press=%1$s&beg=0&max=100&album_name=%2$s";
+    public static final String ALBUM_DETAIL_URL = "http://4gun.net/api/v1/photos?press=%1$s&beg=0&album_name=%2$s";
+    public static final String ALBUM_LASTID = "?beg_id=";
 
 
     @Override
-    public List<AlbumSummary> loadAlbumSummary() {
-        return loadAlbumSummary(getDefaultCount());
+    public Albums loadAlbumSummary(String lastId) {
+        return loadAlbumSummary(lastId, getDefaultCount());
     }
 
     @Override
-    public List<AlbumSummary> loadAlbumSummary(int size) {
+    public Albums loadAlbumSummary(String lastId, int size) {
+        Albums albums = new Albums();
         List<AlbumSummary> albumSummaries = new ArrayList<>();
-        String jsonString = HttpUtil.get(ALBUM_URL);
+        String url = lastId == null ? ALBUM_URL : ALBUM_URL + ALBUM_LASTID + lastId;
+        String jsonString = HttpUtil.get(url);
         if (jsonString != null) {
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
                 JSONObject data = jsonObject.getJSONObject("data");
-                JSONArray albums = data.getJSONArray("albums");
-                for (int i = 0; i < albums.length(); i++) {
-                    JSONObject jsonAlbum = albums.getJSONObject(i);
+                JSONArray albumList = data.getJSONArray("albums");
+                String lId = data.getString("last_id");
+                for (int i = 0; i < albumList.length(); i++) {
+                    JSONObject jsonAlbum = albumList.getJSONObject(i);
                     AlbumSummary albumSummary = new AlbumSummary();
                     albumSummary.name = jsonAlbum.getString("name");
                     albumSummary.coverUrl = jsonAlbum.getString("cover_url");
@@ -43,7 +47,9 @@ public class BaseLoader extends AbstractLoader {
                     albumSummary.model = jsonAlbum.getString("models");
                     albumSummaries.add(albumSummary);
                 }
-                return albumSummaries;
+                albums.albumSummaries = albumSummaries;
+                albums.setLastId(lId);
+                return albums;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
