@@ -1,6 +1,7 @@
 package com.android.dongtu;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.android.dongtu.data.AlbumSummary;
@@ -14,6 +15,8 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
     @Override
     void init() {
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         addFragment(new AlbumSummaryFragment(), true);
     }
 

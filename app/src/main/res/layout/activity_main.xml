@@ -1,8 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="?attr/colorPrimary"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent" >
+
+    </android.support.v7.widget.Toolbar>
     <FrameLayout
         android:id="@+id/frm_container"
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </RelativeLayout>
