@@ -14,47 +14,55 @@ public class AlbumDetail implements Serializable {
 
     private static final int DEFAULT_COUNT = 10;
 
-	private AlbumSummary albumSummary;
+    private AlbumSummary albumSummary;
 
-	public List<String> pics;
+    public List<String> pics;
 
-	private int position;
+    private int position;
 
-	public AlbumDetail(){
+    public AlbumDetail() {
 
-	}
+    }
 
-	public AlbumDetail(AlbumSummary albumSummary) {
-		this.albumSummary = albumSummary;
-		pics = new ArrayList<>();
-	}
+    public AlbumDetail(AlbumSummary albumSummary) {
+        this.albumSummary = albumSummary;
+        pics = new ArrayList<>();
+    }
 
-	public void setPosition(int position) {
-		this.position = position;
-	}
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
-	public int getPosition() {
-		return position;
-	}
+    public int getPosition() {
+        return position;
+    }
 
-	public void addPhotos(String photoUrl) {
-		pics.add(photoUrl);
-	}
+    public int getSize() {
+        return pics.size();
+    }
 
-    public List<String> getPics(int count) {
+    public void addPhotos(String photoUrl) {
+        pics.add(photoUrl);
+    }
+
+    public List<String> getPics(int startPosition, int count) {
         List<String> ret = new ArrayList<>();
-        for(int i = position ; i < position + count ; i++) {
-            if(i < pics.size()) {
+        for (int i = startPosition; i < startPosition + count; i++) {
+            if (i < pics.size()) {
                 ret.add(pics.get(i));
             }
         }
         position += count;
-        Log.i("terry", "position: " + position +  " | size:" + ret.size());
+        Log.i("terry", "start position: " + startPosition + " | size:" + ret.size());
         return ret;
     }
 
-	public List<String> getPics() {
-        return getPics(DEFAULT_COUNT);
-	}
+    public List<String> getPics(int startPosition) {
+        return getPics(startPosition, DEFAULT_COUNT);
+    }
+
+    public List<String> getAllPics() {
+        return pics;
+    }
 
 }

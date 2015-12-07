@@ -26,6 +26,7 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
     private static final String ARG_ALBUMSUMMARY = "arg_albumsummary";
 
     private AlbumSummary albumSummary;
+    private AlbumDetail albumDetail;
 
     public static AlbumDetailFragment instance(AlbumSummary albumSummary) {
         AlbumDetailFragment fragment = new AlbumDetailFragment();
@@ -46,10 +47,14 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
 
     @Override
     public Object load() {
-        isLoading = true;
-        Object object = abstractLoader.loadAlbumDetail(albumSummary);
-        isLoading = false;
-        return object;
+        if (albumDetail == null) {
+            isLoading = true;
+            albumDetail = abstractLoader.loadAlbumDetail(albumSummary);
+            isLoading = false;
+            return albumDetail.getPics(0);
+        } else {
+            return albumDetail.getPics(albumDetail.getPosition());
+        }
     }
 
     @Override
@@ -69,21 +74,27 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
                 Intent intent = new Intent(getActivity(), PhotoActivity.class);
                 intent.setAction(Intent.ACTION_VIEW);
                 Bundle bundle = new Bundle();
-                AlbumDetail albumDetail = new AlbumDetail();
-                albumDetail.pics = (List<String>) adapter.getData();
                 bundle.putSerializable(PhotoActivity.KEY_DETAIL, albumDetail);
+                bundle.putInt(PhotoActivity.KEY_POSITION, position);
                 intent.putExtras(bundle);
                 ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
             }
         });
+//        adapter.setOnGetViewListener(new AbstractAlbumAdapter.OnGetViewListener() {
+//            @Override
+//            public void onBindView ( int position){
+//                getMoreImagesIfNeeded(position, albumDetail.getSize());
+//            }
+//        });
 
     }
 
     @Override
     public void loadMore(Message message) {
-        AlbumDetail albumDetail = (AlbumDetail) message.obj;
-        List<String> data = albumDetail.getPics();
-        adapter.add(data);
+        List<String> data = (List<String>) message.obj;
+        if(data.size() > 0) {
+            adapter.add(data);
+        }
     }
 
 }

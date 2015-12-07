@@ -13,6 +13,7 @@ import com.android.dongtu.ui.fragment.PhotoFragment;
 public class PhotoActivity extends BaseActivity{
 
     public static final String KEY_DETAIL = "key_detail";
+    public static final String KEY_POSITION = "key_position";
 
     @Override
     void init() {
@@ -21,10 +22,12 @@ public class PhotoActivity extends BaseActivity{
         if(intent != null) {
             Bundle bundle = intent.getExtras();
             AlbumDetail albumDetail = (AlbumDetail) bundle.getSerializable(KEY_DETAIL);
-            Fragment fragment = PhotoFragment.instance(albumDetail, 0);
-            addFragment(fragment, true);
+            int position = bundle.getInt(KEY_POSITION);
+            if(albumDetail != null) {
+                Fragment fragment = PhotoFragment.instance(albumDetail, position);
+                addFragment(fragment, true);
+            }
         }
-
     }
 
     @Override

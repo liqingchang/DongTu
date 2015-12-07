@@ -42,6 +42,12 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
                 callback.onFragmentCallback(MainActivity.MAIN_ALBUMDETAIL, view, ((List<AlbumSummary>) adapter.getData()).get(position));
             }
         });
+//        adapter.setOnGetViewListener(new AlbumSummaryAdapter.OnGetViewListener() {
+//            @Override
+//            public void onBindView(int position) {
+//                getMoreImagesIfNeeded(position, adapter.getItemCount());
+//            }
+//        });
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,8 +108,9 @@ public abstract class AbstractAlbumFragment extends Fragment {
     /**
      * 判断是否需要加载更多数据
      */
-    private void getMoreImagesIfNeeded(int position, int totalItemCount) {
+    protected void getMoreImagesIfNeeded(int position, int totalItemCount) {
         int defaultNumberOfItemsPerPage = abstractLoader.getDefaultCount();
+        Log.i("terry", "position:" + position + " total:" + totalItemCount + " itemCount:" + adapter.getItemCount());
         boolean shouldLoadMore = position >= totalItemCount - (defaultNumberOfItemsPerPage / 2);
         if (shouldLoadMore && !isLoading && adapter != null && adapter.getItemCount() > 0) {
             // 获取更多数据

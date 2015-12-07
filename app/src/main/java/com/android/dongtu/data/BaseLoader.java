@@ -73,7 +73,6 @@ public class BaseLoader extends AbstractLoader {
                     String id = photoJSONObject.getString("id");
                     albumDetail.addPhotos(photoUrl);
                 }
-                Log.i("terry", "size:" + albumDetail.getPics().size());
                 return albumDetail;
             } catch (JSONException e) {
                 e.printStackTrace();
