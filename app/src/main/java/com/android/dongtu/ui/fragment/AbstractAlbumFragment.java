@@ -36,6 +36,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
     protected AbstractAlbumAdapter adapter;
     protected AbstractLoader abstractLoader;
     protected FragmentCallback callback;
+    protected Object lastData;
     private AlbumFragmentHandler handler;
     private GridLayoutManager gridLayoutManager;
     /**
@@ -69,7 +70,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            callback = (FragmentCallback)context;
+            callback = (FragmentCallback) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement FragmentCallback");
         }
