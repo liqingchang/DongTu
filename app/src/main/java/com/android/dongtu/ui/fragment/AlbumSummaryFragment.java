@@ -54,6 +54,9 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
     public void loadMore(Message message) {
         if (!isLoading && message.obj != null) {
             Albums albums = (Albums) message.obj;
+            if(lastData!= null && albums.getLastId().equals(((Albums)lastData).getLastId())) {
+                return;
+            }
             lastData = albums;
             List<AlbumSummary> data = albums.albumSummaries;
             adapter.add(data);

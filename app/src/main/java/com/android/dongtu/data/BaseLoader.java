@@ -1,7 +1,5 @@
 package com.android.dongtu.data;
 
-import android.util.Log;
-
 import com.android.dongtu.http.HttpUtil;
 
 import org.json.JSONArray;

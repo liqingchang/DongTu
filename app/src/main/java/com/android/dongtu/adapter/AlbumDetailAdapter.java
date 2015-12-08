@@ -55,7 +55,7 @@ public class AlbumDetailAdapter extends AbstractAlbumAdapter {
         if (url != null) {
             LinearLayout.LayoutParams lyp = new LinearLayout.LayoutParams(sGirdImageSize,sGirdImageSize);
             holder.itemView.setLayoutParams(lyp);
-            ImageLoader.getInstance().displayImage(url, holder.pic, options, new SimpleImageLoadingListener());
+            ImageLoader.getInstance().displayImage(url+"!thumb", holder.pic, options, new SimpleImageLoadingListener());
         }
     }
 

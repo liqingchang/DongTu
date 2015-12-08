@@ -22,6 +22,7 @@ import com.android.dongtu.data.AbstractLoader;
 import com.android.dongtu.data.BaseLoader;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 import in.srain.cube.util.LocalDisplay;
 

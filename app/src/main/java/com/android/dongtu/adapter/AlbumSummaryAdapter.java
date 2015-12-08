@@ -45,7 +45,8 @@ public class AlbumSummaryAdapter extends AbstractAlbumAdapter {
         if (albumSummary != null) {
             LinearLayout.LayoutParams lyp = new LinearLayout.LayoutParams(sGirdImageSize,sGirdImageSize);
             holder.itemView.setLayoutParams(lyp);
-            ImageLoader.getInstance().displayImage(albumSummary.coverUrl, holder.pic, options, new SimpleImageLoadingListener());
+            // 封面使用缩略图增加速度
+            ImageLoader.getInstance().displayImage(albumSummary.coverUrl+"!thumb", holder.pic, options, new SimpleImageLoadingListener());
             holder.name.setText(albumSummary.name);
         }
     }
