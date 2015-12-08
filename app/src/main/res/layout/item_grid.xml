@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
-    android:paddingBottom="15dp"
     auto:overlay="?android:attr/selectableItemBackground"
     android:transitionName="@string/transition_photo"
     >
@@ -15,13 +14,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="2dp">
+        android:padding="1dp"
+        >
 
         <ImageView
             android:id="@+id/imv_cover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1dp"
             android:scaleType="centerCrop"/>
 
     </LinearLayout>

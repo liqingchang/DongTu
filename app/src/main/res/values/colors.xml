@@ -2,6 +2,7 @@
 <resources>
     <!--基本色定义-->
     <color name="White">#ffffff</color>
+    <color name="Black">#000000</color>
     <color name="Grey.Transparent">#cccc</color>
     <color name="Grey.Transparent.Shadow">#4ccc</color>
     <color name="Purple">#b39ddb</color>

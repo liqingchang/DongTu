@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.view.View;
 
 import com.android.dongtu.PhotoActivity;
@@ -68,25 +65,19 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
             @Override
             public void onItemClick(View view, int position) {
                 String transitionName = getString(R.string.transition_photo);
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                        Pair.create(view.findViewById(R.id.imv_cover), transitionName)
-                );
+//                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+//                        Pair.create(view.findViewById(R.id.imv_cover), transitionName)
+//                );
                 Intent intent = new Intent(getActivity(), PhotoActivity.class);
                 intent.setAction(Intent.ACTION_VIEW);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(PhotoActivity.KEY_DETAIL, albumDetail);
                 bundle.putInt(PhotoActivity.KEY_POSITION, position);
                 intent.putExtras(bundle);
-                ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+//                ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+                startActivity(intent);
             }
         });
-//        adapter.setOnGetViewListener(new AbstractAlbumAdapter.OnGetViewListener() {
-//            @Override
-//            public void onBindView ( int position){
-//                getMoreImagesIfNeeded(position, albumDetail.getSize());
-//            }
-//        });
-
     }
 
     @Override
