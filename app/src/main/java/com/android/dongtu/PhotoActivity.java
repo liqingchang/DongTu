@@ -17,7 +17,7 @@ public class PhotoActivity extends BaseActivity{
 
     @Override
     void init() {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_photo);
         Intent intent = getIntent();
         if(intent != null) {
             Bundle bundle = intent.getExtras();
