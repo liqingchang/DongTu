@@ -1,9 +1,14 @@
 package com.android.dongtu.app;
 
 import android.app.Application;
+import android.util.Log;
 
+import com.android.dongtu.util.IdUtil;
+import com.android.dongtu.util.Logger;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import java.util.UUID;
 
 /**
  * Created by kuroterry on 15/11/15.
@@ -21,6 +26,8 @@ public class App extends Application {
 
         //Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(configuration);
+        UUID uuid = IdUtil.getUUID(this);
+        Logger.i(uuid.toString());
         sApp = this;
     }
 }

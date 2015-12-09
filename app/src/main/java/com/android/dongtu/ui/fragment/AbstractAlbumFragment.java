@@ -111,7 +111,6 @@ public abstract class AbstractAlbumFragment extends Fragment {
      */
     protected void getMoreImagesIfNeeded(int position, int totalItemCount) {
         int defaultNumberOfItemsPerPage = abstractLoader.getDefaultCount();
-        Log.i("terry", "position:" + position + " total:" + totalItemCount + " itemCount:" + adapter.getItemCount());
         boolean shouldLoadMore = position >= totalItemCount - (defaultNumberOfItemsPerPage / 2);
         if (shouldLoadMore && !isLoading && adapter != null && adapter.getItemCount() > 0) {
             // 获取更多数据
