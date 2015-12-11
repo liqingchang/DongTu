@@ -45,6 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isReplace) {
             fragmentTransaction.replace(getContainerRes() , fragment);
         } else {
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_right);
             fragmentTransaction.add(getContainerRes(), fragment);
             fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }

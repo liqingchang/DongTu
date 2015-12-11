@@ -1,6 +1,8 @@
 package com.android.dongtu;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -16,6 +18,7 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
 
     private Toolbar toolbar;
     public MaterialMenuView homeButton;
+    private MaterialMenuDrawable.IconState currentIconState;
 
     @Override
     void init() {
@@ -37,7 +40,38 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
         addFragment(new AlbumSummaryFragment(), true);
     }
 
-    private MaterialMenuDrawable.IconState currentIconState;
+    @Override
+    public void onBackPressed() {
+        if(currentIconState == MaterialMenuDrawable.IconState.ARROW) {
+            // 还原动画
+            setHomeIcon(MaterialMenuDrawable.IconState.ARROW);
+            animateHomeIcon(MaterialMenuDrawable.IconState.BURGER);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStack();
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    int getContainerRes() {
+        return R.id.frm_container;
+    }
+
+    @Override
+    public void onFragmentCallback(int code, View view, Object data) {
+        Fragment fragment = null;
+        switch (code) {
+            case MAIN_ALBUMDETAIL:
+                AlbumSummary albumSummary = (AlbumSummary) data;
+                fragment = AlbumDetailFragment.instance(albumSummary);
+                setHomeIcon(MaterialMenuDrawable.IconState.BURGER);
+                animateHomeIcon(MaterialMenuDrawable.IconState.ARROW);
+                addFragment(fragment, false);
+                break;
+        }
+    }
+
     public boolean animateHomeIcon(MaterialMenuDrawable.IconState iconState) {
         if (currentIconState == iconState) return false;
         currentIconState = iconState;
@@ -49,27 +83,6 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
         if (currentIconState == iconState) return;
         currentIconState = iconState;
         homeButton.setState(currentIconState);
-    }
-
-
-    @Override
-    int getContainerRes() {
-        return R.id.frm_container;
-    }
-
-
-    @Override
-    public void onFragmentCallback(int code,View view, Object data) {
-        Fragment fragment = null;
-        switch(code) {
-            case MAIN_ALBUMDETAIL:
-                AlbumSummary albumSummary = (AlbumSummary) data;
-                fragment = AlbumDetailFragment.instance(albumSummary);
-                setHomeIcon(MaterialMenuDrawable.IconState.BURGER);
-                animateHomeIcon(MaterialMenuDrawable.IconState.ARROW);
-                addFragment(fragment, false);
-                break;
-        }
     }
 
 }
