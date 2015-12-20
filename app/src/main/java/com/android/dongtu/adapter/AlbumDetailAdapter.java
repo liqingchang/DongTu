@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.dongtu.R;
+import com.android.dongtu.data.Photo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -22,7 +23,7 @@ import in.srain.cube.util.LocalDisplay;
  */
 public class AlbumDetailAdapter extends AbstractAlbumAdapter {
 
-    public List<String> data;
+    public List<Photo> data;
     private DisplayImageOptions options;
     public static final int sGirdImageSize = (LocalDisplay.SCREEN_WIDTH_PIXELS - LocalDisplay.dp2px(12 + 12 + 10)) / 2;
 
@@ -51,7 +52,7 @@ public class AlbumDetailAdapter extends AbstractAlbumAdapter {
         if(onGetViewListener != null) {
             onGetViewListener.onBindView(position);
         }
-        String url = data.get(position);
+        String url = data.get(position).url;
         if (url != null) {
             LinearLayout.LayoutParams lyp = new LinearLayout.LayoutParams(sGirdImageSize,sGirdImageSize);
             holder.itemView.setLayoutParams(lyp);
@@ -67,7 +68,7 @@ public class AlbumDetailAdapter extends AbstractAlbumAdapter {
     @Override
     public <T> void add(List<T> data) {
         for(int i = 0 ; i < data.size(); i++) {
-            this.data.add((String) data.get(i));
+            this.data.add((Photo) data.get(i));
         }
         notifyDataSetChanged();
     }

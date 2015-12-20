@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.android.dongtu.R;
@@ -21,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
+ * 图片详情页面
  * Created by kuroterry on 15/12/2.
  */
 public class PhotoFragment extends Fragment {
@@ -29,7 +31,6 @@ public class PhotoFragment extends Fragment {
     private static final String ARG_POSITION = "arg_position";
 
     private RecyclerViewPager viewPager;
-    private ImageView imvTransition;
     private PhotoAdapter adapter;
     private AlbumDetail data;
     private int position;
@@ -49,7 +50,7 @@ public class PhotoFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         Bundle args = getArguments();
-        if(args != null) {
+        if (args != null) {
             data = (AlbumDetail) args.getSerializable(ARG_DATA);
             position = args.getInt(ARG_POSITION);
         }
@@ -76,17 +77,13 @@ public class PhotoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        imvTransition.setVisibility(View.GONE);
     }
 
     private void init(View view) {
         viewPager = (RecyclerViewPager) view.findViewById(R.id.viewpager);
-        LinearLayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         viewPager.setLayoutManager(layout);
         viewPager.setAdapter(new RecyclerViewPagerAdapter(viewPager, adapter));
         viewPager.scrollToPosition(position);
-        imvTransition = (ImageView) view.findViewById(R.id.imv_trans);
-        ImageLoader.getInstance().displayImage(data.getAllPics().get(position), imvTransition, options, new SimpleImageLoadingListener());
     }
-
 }

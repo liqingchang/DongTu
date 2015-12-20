@@ -1,7 +1,5 @@
 package com.android.dongtu.data;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +14,17 @@ public class AlbumDetail implements Serializable {
 
     private AlbumSummary albumSummary;
 
-    public List<String> pics;
+    public List<Photo> pics;
 
     private int position;
 
     public AlbumDetail() {
-
+        pics = new ArrayList<>();
     }
 
     public AlbumDetail(AlbumSummary albumSummary) {
+        this();
         this.albumSummary = albumSummary;
-        pics = new ArrayList<>();
     }
 
     public void setPosition(int position) {
@@ -41,27 +39,26 @@ public class AlbumDetail implements Serializable {
         return pics.size();
     }
 
-    public void addPhotos(String photoUrl) {
-        pics.add(photoUrl);
+    public void addPhotos(Photo photo) {
+        pics.add(photo);
     }
 
-    public List<String> getPics(int startPosition, int count) {
-        List<String> ret = new ArrayList<>();
+    public List<Photo> getPics(int startPosition, int count) {
+        List<Photo> ret = new ArrayList<>();
         for (int i = startPosition; i < startPosition + count; i++) {
             if (i < pics.size()) {
                 ret.add(pics.get(i));
             }
         }
         position += count;
-        Log.i("terry", "start position: " + startPosition + " | size:" + ret.size());
         return ret;
     }
 
-    public List<String> getPics(int startPosition) {
+    public List<Photo> getPics(int startPosition) {
         return getPics(startPosition, DEFAULT_COUNT);
     }
 
-    public List<String> getAllPics() {
+    public List<Photo> getAllPics() {
         return pics;
     }
 

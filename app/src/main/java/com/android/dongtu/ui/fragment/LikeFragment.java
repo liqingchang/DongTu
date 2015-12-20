@@ -1,6 +1,5 @@
 package com.android.dongtu.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -11,44 +10,30 @@ import com.android.dongtu.R;
 import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumDetailAdapter;
 import com.android.dongtu.data.AlbumDetail;
-import com.android.dongtu.data.AlbumSummary;
 import com.android.dongtu.data.Photo;
+import com.android.dongtu.data.PhotoManager;
 
 import java.util.List;
 
 /**
- * Created by kuroterry on 15/12/2.
+ * 收藏页面
+ * Created by kuroterry on 15/12/12.
  */
-public class AlbumDetailFragment extends AbstractAlbumFragment {
+public class LikeFragment extends AbstractAlbumFragment{
 
-    private static final String ARG_ALBUMSUMMARY = "arg_albumsummary";
+    public static final String TAG = LikeFragment.class.getSimpleName();
 
-    private AlbumSummary albumSummary;
     private AlbumDetail albumDetail;
 
-    public static AlbumDetailFragment instance(AlbumSummary albumSummary) {
-        AlbumDetailFragment fragment = new AlbumDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ARG_ALBUMSUMMARY, albumSummary);
-        fragment.setArguments(bundle);
+    public static LikeFragment instance() {
+        LikeFragment fragment = new LikeFragment();
         return fragment;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            albumSummary = (AlbumSummary) bundle.getSerializable(ARG_ALBUMSUMMARY);
-        }
-    }
-
-    @Override
     public Object load() {
-        if (albumDetail == null) {
-            isLoading = true;
-            albumDetail = abstractLoader.loadAlbumDetail(albumSummary);
-            isLoading = false;
+        if(albumDetail == null) {
+            albumDetail = PhotoManager.getInstance().getAllLike();
             return albumDetail.getPics(0);
         } else {
             return albumDetail.getPics(albumDetail.getPosition());
@@ -79,6 +64,7 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
                 startActivity(intent);
             }
         });
+
     }
 
     @Override

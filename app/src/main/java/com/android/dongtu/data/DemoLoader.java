@@ -158,4 +158,14 @@ public class DemoLoader extends AbstractLoader {
 		return null;
 	}
 
+	@Override
+	public boolean setLike(Photo photo) {
+		return false;
+	}
+
+	@Override
+	public AlbumDetail loadLike() {
+		return null;
+	}
+
 }

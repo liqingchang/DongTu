@@ -2,22 +2,24 @@ package com.android.dongtu;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.android.dongtu.data.AlbumSummary;
 import com.android.dongtu.ui.fragment.AlbumDetailFragment;
 import com.android.dongtu.ui.fragment.AlbumSummaryFragment;
+import com.android.dongtu.ui.fragment.LikeFragment;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuView;
 
-public class MainActivity extends BaseActivity implements FragmentCallback {
+public class MainActivity extends BaseActivity implements FragmentCallback,View.OnClickListener {
 
     public static final int MAIN_ALBUMDETAIL = 0;
 
     private Toolbar toolbar;
     public MaterialMenuView homeButton;
+    public ImageView imvLike;
     private MaterialMenuDrawable.IconState currentIconState;
 
     @Override
@@ -26,17 +28,14 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        toolbar.setNavigationIcon(R.dra);
         toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
-        homeButton = (MaterialMenuView) findViewById(R.id.material_menu_button);
+        homeButton = (MaterialMenuView) findViewById(R.id.tool_billboard);
+        homeButton.setOnClickListener(this);
+        imvLike = (ImageView) findViewById(R.id.tool_like);
+        imvLike.setOnClickListener(this);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setTitle("");
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
         addFragment(new AlbumSummaryFragment(), true);
     }
 
@@ -68,6 +67,18 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
                 setHomeIcon(MaterialMenuDrawable.IconState.BURGER);
                 animateHomeIcon(MaterialMenuDrawable.IconState.ARROW);
                 addFragment(fragment, false);
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tool_like:
+                addFragment(LikeFragment.instance(), false);
+                break;
+            case R.id.tool_billboard:
+                onBackPressed();
                 break;
         }
     }

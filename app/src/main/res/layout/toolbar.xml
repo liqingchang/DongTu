@@ -25,7 +25,7 @@
         >
 
         <com.balysv.materialmenu.MaterialMenuView
-            android:id="@+id/material_menu_button"
+            android:id="@+id/tool_billboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -36,15 +36,13 @@
             app:mm_transformDuration="1000"
             />
 
-        <TextView
-            android:id="@+id/toolbar_title"
+        <ImageView
+            android:id="@+id/tool_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@mipmap/ic_favorite_black_36dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"/>
+            android:padding="4dp"
+            />
     </LinearLayout>
 </RelativeLayout>
