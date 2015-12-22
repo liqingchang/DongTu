@@ -7,6 +7,7 @@
     <color name="Grey.Transparent.Shadow">#4ccc</color>
     <color name="Purple">#b39ddb</color>
     <color name="Purple.Dark">#673ab7</color>
+    <color name="Grey.Light">#eee</color>
 
     <!--主色调定义-->
     <color name="colorPrimary">@color/Purple</color>

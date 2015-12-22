@@ -1,5 +1,9 @@
 package com.android.dongtu;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -51,4 +55,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         fragmentTransaction.commit();
     }
+
 }

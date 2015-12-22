@@ -7,12 +7,12 @@ import com.android.dongtu.data.PhotoManager;
  * 收藏页面
  * Created by kuroterry on 15/12/12.
  */
-public class LikeFragment extends AbstractDetailFragment{
+public class TopFragment extends AbstractDetailFragment{
 
-    public static final String TAG = LikeFragment.class.getSimpleName();
+    public static final String TAG = TopFragment.class.getSimpleName();
 
-    public static LikeFragment instance() {
-        LikeFragment fragment = new LikeFragment();
+    public static TopFragment instance() {
+        TopFragment fragment = new TopFragment();
         return fragment;
     }
 

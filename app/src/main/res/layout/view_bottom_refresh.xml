@@ -5,7 +5,6 @@
               android:layout_height="match_parent">
     <ImageView android:layout_height="wrap_content"
                android:layout_width="wrap_content"
-               android:src="@drawable/ic_menu_black_24dp"
                />
     <TextView
         android:padding="12dp"

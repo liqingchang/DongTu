@@ -16,6 +16,11 @@ import java.util.List;
  */
 public class AlbumSummaryFragment extends AbstractAlbumFragment {
 
+    public static AlbumSummaryFragment instance(){
+        AlbumSummaryFragment fragment = new AlbumSummaryFragment();
+        return fragment;
+    }
+
     @Override
     public Object load() {
         isLoading = true;

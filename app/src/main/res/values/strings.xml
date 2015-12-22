@@ -8,4 +8,10 @@
     <string name="load_all">没有更多了t_t</string>
 
     <string name="transition_photo">transition_photo</string>
+
+    <string name="title_section_toplist">Top</string>
+    <string name="title_section_search">Search</string>
+    <string name="title_section_random">Random</string>
+    <string name="title_section_saved">Saved</string>
+    <string name="title_section_latest">New</string>
 </resources>
