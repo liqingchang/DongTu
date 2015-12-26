@@ -1,32 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.android.dongtu.ui.view.OverlayLinearLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical"
-    auto:overlay="?android:attr/selectableItemBackground"
-    android:transitionName="@string/transition_photo"
-    >
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#e5e5e5"
+    android:foreground="?android:attr/selectableItemBackground"
+    cardview:cardCornerRadius="0dp"
+    cardview:cardElevation="1dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="1dp"
-        >
-
-        <ImageView
-            android:id="@+id/imv_cover"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"/>
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imv_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/txv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,5 +23,6 @@
         android:gravity="center_horizontal"
         android:singleLine="true"
         android:textSize="14sp"
+        android:visibility="gone"
         />
-</com.android.dongtu.ui.view.OverlayLinearLayout>
+</android.support.v7.widget.CardView>

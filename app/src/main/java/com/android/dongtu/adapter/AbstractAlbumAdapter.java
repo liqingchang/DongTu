@@ -1,8 +1,11 @@
 package com.android.dongtu.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +40,13 @@ public abstract class AbstractAlbumAdapter extends RecyclerView.Adapter<Abstract
 
     }
 
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.item_grid, parent, false);
+        return new ViewHolder(view);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         View itemView;
         ImageView pic;
@@ -67,7 +77,7 @@ public abstract class AbstractAlbumAdapter extends RecyclerView.Adapter<Abstract
     }
 
     public interface OnItemClickListener {
-        abstract void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

@@ -30,13 +30,6 @@ public class AlbumSummaryAdapter extends AbstractAlbumAdapter {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.inflate(R.layout.item_grid, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if(onGetViewListener != null) {
             onGetViewListener.onBindView(position);

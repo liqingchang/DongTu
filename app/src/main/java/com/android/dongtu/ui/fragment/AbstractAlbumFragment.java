@@ -8,12 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.dongtu.FragmentCallback;
+import com.android.dongtu.GridSpacingItemDecoration;
 import com.android.dongtu.R;
 import com.android.dongtu.ThreadManager;
 import com.android.dongtu.adapter.AbstractAlbumAdapter;
@@ -22,7 +22,6 @@ import com.android.dongtu.data.AbstractLoader;
 import com.android.dongtu.data.BaseLoader;
 
 import java.lang.ref.WeakReference;
-import java.util.Objects;
 
 import in.srain.cube.util.LocalDisplay;
 
@@ -41,6 +40,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
     protected Object lastData;
     private AlbumFragmentHandler handler;
     private GridLayoutManager gridLayoutManager;
+    private float space;
     /**
      * 是否加载中,避免多次加载
      */
@@ -80,6 +80,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
         abstractLoader = new BaseLoader();
         initAdapter();
         handler = new AlbumFragmentHandler(this);
+        space = context.getResources().getDimension(R.dimen.grid_space);
     }
 
     @Nullable
@@ -101,6 +102,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
         });
         revAlbum.setAdapter(adapter);
         revAlbum.setLayoutManager(gridLayoutManager);
+        revAlbum.addItemDecoration(new GridSpacingItemDecoration(2, (int)space , false));
         afterInit(view);
         // 加载一次数据
         ThreadManager.runBg(loadMoreRunnable);
