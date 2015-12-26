@@ -5,10 +5,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.android.dongtu.adapter.SmartFragmentPagerAdapter;
 import com.android.dongtu.data.AlbumSummary;
 import com.android.dongtu.ui.fragment.AlbumDetailFragment;
+import com.android.dongtu.ui.view.TabBar;
 import com.android.dongtu.ui.view.TabBarView;
 
 public class MainActivity extends BaseActivity implements FragmentCallback {
@@ -17,7 +19,9 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
 
     private Toolbar toolbar;
     private ViewPager viewPager;
-    private TabBarView tabBarView;
+    private TabBarView tabBarMain;
+    private ImageButton btnBack;
+    private TabBar tabBar;
     private SmartFragmentPagerAdapter adapter;
 
     @Override
@@ -29,7 +33,9 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
             getSupportActionBar().setElevation(12.0f);
             getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             getSupportActionBar().setCustomView(R.layout.tab_bar);
-            tabBarView = (TabBarView) getSupportActionBar().getCustomView();
+            tabBar = (TabBar) getSupportActionBar().getCustomView();
+            tabBarMain = (TabBarView) tabBar.getMain();
+            btnBack = (ImageButton) tabBar.getSub().findViewById(R.id.btn_back);
         }
 
         viewPager = (ViewPager) findViewById(R.id.fragment_pager);
@@ -37,15 +43,14 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
             adapter = new SmartFragmentPagerAdapter(getSupportFragmentManager());
         }
 
-
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(SmartFragmentPagerAdapter.NUM_ITEMS - 1);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (tabBarView != null) {
-                    tabBarView.setOffset(positionOffset);
-                    tabBarView.setSelectedTab(position);
+                if (tabBarMain != null) {
+                    tabBarMain.setOffset(positionOffset);
+                    tabBarMain.setSelectedTab(position);
                 }
             }
 
@@ -66,14 +71,21 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
             }
         });
 
-        if (tabBarView != null) {
-            tabBarView.setSelectedTab(0);
+        if (tabBarMain != null) {
+            tabBarMain.setSelectedTab(0);
         }
 
-        tabBarView.setOnTabClickedListener(new TabBarView.OnTabClickedListener() {
+        tabBarMain.setOnTabClickedListener(new TabBarView.OnTabClickedListener() {
             @Override
             public void onTabClicked(int index) {
                 viewPager.setCurrentItem(index);
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -85,10 +97,19 @@ public class MainActivity extends BaseActivity implements FragmentCallback {
     }
 
     @Override
+    public void onBackPressed() {
+        if (tabBar.getStatus() == TabBar.STATUS_SUB) {
+            tabBar.setStatus(TabBar.STATUS_MAIN);
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     public void onFragmentCallback(int code, View view, Object data) {
-        Fragment fragment = null;
+        Fragment fragment;
         switch (code) {
             case MAIN_ALBUMDETAIL:
+                tabBar.setStatus(TabBar.STATUS_SUB);
                 AlbumSummary albumSummary = (AlbumSummary) data;
                 fragment = AlbumDetailFragment.instance(albumSummary);
                 addFragment(fragment, false);

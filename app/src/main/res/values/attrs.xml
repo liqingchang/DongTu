@@ -12,4 +12,11 @@
         <attr name="src" format="reference"/>
         <attr name="text" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="TabBar">
+        <attr name="main" format="reference"/>
+        <attr name="sub" format="reference"/>
+    </declare-styleable>
+
+
 </resources>

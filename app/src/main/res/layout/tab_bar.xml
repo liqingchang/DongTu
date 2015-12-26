@@ -1,73 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--
-  ~ Copyright (C) 2014 Freddie (Musenkishi) Lust-Hed
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
-<com.android.dongtu.ui.view.TabBarView xmlns:android="http://schemas.android.com/apk/res/android"
-                                       xmlns:dongtu="http://schemas.android.com/apk/res-auto"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:minHeight="@dimen/app_bar_height"
-                                       android:gravity="center_vertical"
-                                       android:orientation="horizontal"
-                                       dongtu:tabBarColor="@color/Grey.Light"
-                                       dongtu:tabBarSize="2dp">
-
-    <com.android.dongtu.ui.view.TabView
-            android:id="@+id/tab_toplist"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:background="@drawable/default_selector"
-            android:contentDescription="@string/title_section_toplist"
-            dongtu:src="@mipmap/ic_action_toplist"
-            dongtu:text="@string/title_section_toplist"
-            />
-
-    <com.android.dongtu.ui.view.TabView
-        android:id="@+id/tab_latest"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:background="@drawable/default_selector"
-        android:contentDescription="@string/title_section_latest"
-        dongtu:src="@mipmap/ic_action_latest"
-        dongtu:text="@string/title_section_latest"
-        />
-
-    <com.android.dongtu.ui.view.TabView
-            android:id="@+id/tab_random"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:background="@drawable/default_selector"
-            android:contentDescription="@string/title_section_random"
-            dongtu:src="@mipmap/ic_action_random"
-            dongtu:text="@string/title_section_random"
-            />
-
-    <com.android.dongtu.ui.view.TabView
-            android:id="@+id/tab_saved"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:background="@drawable/default_selector"
-            android:contentDescription="@string/title_section_saved"
-            dongtu:src="@mipmap/ic_action_saved"
-            dongtu:text="@string/title_section_saved"
-            />
-
-</com.android.dongtu.ui.view.TabBarView>
+<com.android.dongtu.ui.view.TabBar xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:tabbar="http://schemas.android.com/apk/res-auto"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent"
+                                   tabbar:main="@layout/tabbar_main"
+                                   tabbar:sub="@layout/tabbar_sub" />
