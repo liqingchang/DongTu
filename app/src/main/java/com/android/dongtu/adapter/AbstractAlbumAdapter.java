@@ -20,6 +20,7 @@ import java.util.List;
 public abstract class AbstractAlbumAdapter extends RecyclerView.Adapter<AbstractAlbumAdapter.ViewHolder> {
 
     public abstract <T> void add(List<T> data);
+    public abstract <T> void setData(List<T> data);
     public abstract Object getData();
 
     protected DisplayImageOptions options;

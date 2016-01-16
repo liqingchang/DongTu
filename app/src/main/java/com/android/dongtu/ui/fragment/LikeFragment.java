@@ -4,7 +4,7 @@ import com.android.dongtu.data.AlbumDetail;
 import com.android.dongtu.data.PhotoManager;
 
 /**
- * 收藏页面
+ * &#x6536;&#x85cf;&#x9875;&#x9762;
  * Created by kuroterry on 15/12/12.
  */
 public class LikeFragment extends AbstractDetailFragment{
@@ -17,8 +17,8 @@ public class LikeFragment extends AbstractDetailFragment{
     }
 
     @Override
-    public AlbumDetail initAlbum() {
-        return PhotoManager.getInstance().getAllLike();
+    public AlbumDetail loadAlbum(int skip, int max) {
+        return PhotoManager.getInstance().getAllLike(skip, max);
     }
 
 }

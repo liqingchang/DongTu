@@ -25,17 +25,27 @@ public class AlbumDetailFragment extends AbstractDetailFragment {
     }
 
     @Override
+    public AlbumDetail loadAlbum(int skip, int max) {
+        return abstractLoader.loadAlbumDetail(albumSummary);
+    }
+
+    @Override
+    public Object load() {
+        if (albumDetail == null) {
+            albumDetail = loadAlbum(0, abstractLoader.getDefaultCount());
+            return albumDetail.getPics(0);
+        } else {
+            return albumDetail.getPics(albumDetail.getPosition());
+        }
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Bundle bundle = getArguments();
         if (bundle != null) {
             albumSummary = (AlbumSummary) bundle.getSerializable(ARG_ALBUMSUMMARY);
         }
-    }
-
-    @Override
-    public AlbumDetail initAlbum() {
-        return abstractLoader.loadAlbumDetail(albumSummary);
     }
 
 }

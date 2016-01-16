@@ -1,5 +1,7 @@
 package com.android.dongtu.data;
 
+import com.android.dongtu.util.Logger;
+
 import java.util.List;
 
 /**
@@ -23,8 +25,17 @@ public class PhotoManager {
         return loader.setLike(photo);
     }
 
-    public AlbumDetail getAllLike() {
-        return loader.loadLike();
+    public AlbumDetail getAllLike(int skip, int max) {
+        return loader.loadLike(skip, max);
     }
+
+    public AlbumDetail getRandom(int skip, int max){
+        return loader.loadRandom(skip, max);
+    }
+
+    public AlbumDetail getRanking(int skip, int max){
+        return loader.loadTop(skip, max);
+    }
+
 
 }

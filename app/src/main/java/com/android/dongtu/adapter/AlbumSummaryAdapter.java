@@ -58,6 +58,12 @@ public class AlbumSummaryAdapter extends AbstractAlbumAdapter {
     }
 
     @Override
+    public <T> void setData(List<T> data) {
+        this.data = (List<AlbumSummary>)data;
+        notifyDataSetChanged();
+    }
+
+    @Override
     public Object getData() {
         return data;
     }

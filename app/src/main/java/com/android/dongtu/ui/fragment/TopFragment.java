@@ -17,8 +17,8 @@ public class TopFragment extends AbstractDetailFragment{
     }
 
     @Override
-    public AlbumDetail initAlbum() {
-        return PhotoManager.getInstance().getAllLike();
+    public AlbumDetail loadAlbum(int skip, int max) {
+        return PhotoManager.getInstance().getRanking(skip, max);
     }
 
 }

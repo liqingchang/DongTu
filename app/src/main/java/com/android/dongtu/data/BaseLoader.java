@@ -18,14 +18,58 @@ import java.util.List;
 public class BaseLoader extends AbstractLoader {
 
     public static final String BASE_URL = "http://4gun.net/api/v1";
-    public static final String ALBUM_URL = BASE_URL + "/albums";
-    public static final String ALBUM_DETAIL_URL = BASE_URL + "/photos?press=%1$s&beg=0&album_name=%2$s&uid=%3$s";
+    public static final String ALBUM_URL = BASE_URL + "/albums?uid=%1$s&os=%2$s&skip=%3$s&max=%4$s";
+    public static final String ALBUM_DETAIL_URL = BASE_URL + "/photos?press=%1$s&album_name=%2$s&uid=%3$s&os=%4$s&skip=%5$s&max=%6$s";
     public static final String ALBUM_LASTID = "?beg_id=";
-    public static final String ALBUM_FAVORITE = BASE_URL + "/user/like?uid=%1$s&photo_id=%2$s";
-    public static final String LIKE = BASE_URL + "/user/liked_photos?uid=%1$s";
+    public static final String SET_LIKE = BASE_URL + "/user/like?uid=%1$s&photo_id=%2$s&os=%3$s";
+    public static final String LIKE = BASE_URL + "/user/liked_photos?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s";
+
+    public static final String RANDOM = BASE_URL + "/random?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s";
+    public static final String RANK = BASE_URL + "/ranking?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s";
 
     public static final String LIKE_SUCCESS = "success";
+    public static final String OS = "android";
 
+
+    @Override
+    public Albums loadAlbumSummary(int skip, int max) {
+        Albums albums = new Albums();
+        List<AlbumSummary> albumSummaries = new ArrayList<>();
+        String url = String.format(ALBUM_URL, IdUtil.getUUID(App.sApp), OS, skip, max);
+        Logger.i("terry", "load url : " + url);
+        String jsonString = HttpUtil.get(url);
+        if (jsonString != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
+                JSONObject data = jsonObject.getJSONObject("data");
+                JSONArray albumList = data.getJSONArray("albums");
+                for (int i = 0; i < albumList.length(); i++) {
+                    JSONObject jsonAlbum = albumList.getJSONObject(i);
+                    AlbumSummary albumSummary = new AlbumSummary();
+                    albumSummary.name = jsonAlbum.getString("name");
+                    albumSummary.coverUrl = jsonAlbum.getString("cover");
+                    albumSummary.press = jsonAlbum.getString("press");
+                    albumSummary.model = jsonAlbum.getString("models");
+                    albumSummaries.add(albumSummary);
+                }
+                albums.albumSummaries = albumSummaries;
+                return albums;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Albums loadAlbumSummary(int skip) {
+        return loadAlbumSummary(skip, getDefaultCount());
+    }
+
+    @Override
+    public Albums loadAlbumSummary() {
+        return loadAlbumSummary(0);
+    }
 
     @Override
     public Albums loadAlbumSummary(String lastId) {
@@ -54,7 +98,6 @@ public class BaseLoader extends AbstractLoader {
                     albumSummaries.add(albumSummary);
                 }
                 albums.albumSummaries = albumSummaries;
-                albums.setLastId(lId);
                 return albums;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -65,7 +108,7 @@ public class BaseLoader extends AbstractLoader {
 
     @Override
     public AlbumDetail loadAlbumDetail(AlbumSummary albumSummary) {
-        String url = String.format(ALBUM_DETAIL_URL, albumSummary.press, albumSummary.name, IdUtil.getUUID(App.sApp));
+        String url = String.format(ALBUM_DETAIL_URL, albumSummary.press, albumSummary.name, IdUtil.getUUID(App.sApp), OS, 0, 0);
         AlbumDetail albumDetail = new AlbumDetail(albumSummary);
         String jsonString = HttpUtil.get(url);
         Logger.i("terry", "photo json:" + jsonString);
@@ -78,9 +121,9 @@ public class BaseLoader extends AbstractLoader {
                     JSONObject photoJSONObject = photos.getJSONObject(i);
                     String photoUrl = photoJSONObject.getString("url");
                     String id = photoJSONObject.getString("id");
-                    boolean isFavorite = photoJSONObject.getBoolean("is_like");
+                    boolean isFavorite = photoJSONObject.getInt("likes") == 1;
                     Photo photo = new Photo(id, photoUrl, isFavorite);
-                    albumDetail.addPhotos(photo);
+                    albumDetail.addPhoto(photo);
                 }
                 return albumDetail;
             } catch (JSONException e) {
@@ -93,7 +136,7 @@ public class BaseLoader extends AbstractLoader {
     @Override
     public boolean setLike(Photo photo) {
         // 组装url
-        String url = String.format(ALBUM_FAVORITE, IdUtil.getUUID(App.sApp), photo.id);
+        String url = String.format(SET_LIKE, IdUtil.getUUID(App.sApp), photo.id, OS);
         String json = HttpUtil.get(url);
         Logger.i("terry", json);
         try {
@@ -112,19 +155,75 @@ public class BaseLoader extends AbstractLoader {
 
     @Override
     public AlbumDetail loadLike() {
+        return loadLike(0, getDefaultCount());
+    }
+
+    @Override
+    public AlbumDetail loadLike(int skip, int max) {
+        String url = String.format(LIKE, IdUtil.getUUID(App.sApp), skip, max, OS);
         AlbumDetail albumDetail = new AlbumDetail();
-        String url = String.format(LIKE, IdUtil.getUUID(App.sApp));
         String json = HttpUtil.get(url);
-        Logger.i("terry", "load like" + json);
+        Logger.i("terry", "load " + url);
+        Logger.i("terry", "load " + json);
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONObject liked = jsonObject.getJSONObject("data");
-            JSONArray likedArray = liked.getJSONArray("liked_photos");
+            JSONArray likedArray = liked.getJSONArray("photos");
             for (int i = 0; i < likedArray.length(); i++) {
                 JSONObject photoJSONObject = likedArray.getJSONObject(i);
                 String photoUrl = photoJSONObject.getString("url");
                 String id = photoJSONObject.getString("photo_id");
                 Photo photo = new Photo(id, photoUrl, true);
+                albumDetail.pics.add(photo);
+            }
+        } catch (JSONException e) {
+            Logger.e(e.toString());
+        }
+        return albumDetail;
+    }
+
+    @Override
+    public AlbumDetail loadRandom() {
+        return loadRandom(0, getDefaultCount());
+    }
+
+    @Override
+    public AlbumDetail loadRandom(int skip, int max) {
+        String url = String.format(RANDOM, IdUtil.getUUID(App.sApp), skip , max , OS);
+        return load(url);
+    }
+
+    @Override
+    public AlbumDetail loadTop() {
+        return loadTop(0, getDefaultCount());
+    }
+
+    @Override
+    public AlbumDetail loadTop(int skip, int max) {
+        String url = String.format(RANK, IdUtil.getUUID(App.sApp), skip, max, OS);
+        return load(url);
+    }
+
+    public AlbumDetail load(String url, int skip, int max) {
+        return null;
+    }
+
+
+    private AlbumDetail load(String url){
+        AlbumDetail albumDetail = new AlbumDetail();
+        String json = HttpUtil.get(url);
+        Logger.i("terry", "load " + url);
+        Logger.i("terry", "load " + json);
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject liked = jsonObject.getJSONObject("data");
+            JSONArray likedArray = liked.getJSONArray("photos");
+            for (int i = 0; i < likedArray.length(); i++) {
+                JSONObject photoJSONObject = likedArray.getJSONObject(i);
+                String photoUrl = photoJSONObject.getString("url");
+                String id = photoJSONObject.getString("id");
+                boolean like = photoJSONObject.getInt("likes") == 1;
+                Photo photo = new Photo(id, photoUrl, like);
                 albumDetail.pics.add(photo);
             }
         } catch (JSONException e) {

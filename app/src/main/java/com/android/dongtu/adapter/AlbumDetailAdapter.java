@@ -1,10 +1,6 @@
 package com.android.dongtu.adapter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.dongtu.R;
@@ -64,6 +60,12 @@ public class AlbumDetailAdapter extends AbstractAlbumAdapter {
         for(int i = 0 ; i < data.size(); i++) {
             this.data.add((Photo) data.get(i));
         }
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public <T> void setData(List<T> data) {
+        this.data = (List<Photo>)data;
         notifyDataSetChanged();
     }
 

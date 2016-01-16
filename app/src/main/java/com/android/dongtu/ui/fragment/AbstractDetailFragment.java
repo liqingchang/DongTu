@@ -10,9 +10,6 @@ import com.android.dongtu.R;
 import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumDetailAdapter;
 import com.android.dongtu.data.AlbumDetail;
-import com.android.dongtu.data.Photo;
-
-import java.util.List;
 
 /**
  * 排列显示单张图片抽象类
@@ -23,17 +20,7 @@ public abstract class AbstractDetailFragment extends AbstractAlbumFragment {
 
     protected AlbumDetail albumDetail;
 
-    public abstract AlbumDetail initAlbum();
-
-    @Override
-    public Object load() {
-        if(albumDetail == null) {
-            albumDetail = initAlbum();
-            return albumDetail.getPics(0);
-        } else {
-            return albumDetail.getPics(albumDetail.getPosition());
-        }
-    }
+    public abstract AlbumDetail loadAlbum(int skip, int max);
 
     @Override
     public void initAdapter() {
@@ -63,10 +50,23 @@ public abstract class AbstractDetailFragment extends AbstractAlbumFragment {
     }
 
     @Override
+    public Object load() {
+        if(albumDetail == null) { // 初始化数据
+            albumDetail = loadAlbum(0, abstractLoader.getDefaultCount());
+        } else {
+            AlbumDetail detail = loadAlbum(albumDetail.getSize(), abstractLoader.getDefaultCount());
+            albumDetail.addAllPhoto(detail.getAllPics());
+            if(detail.getSize() == 0) {
+                isNoMore = true;
+            }
+        }
+        return albumDetail;
+    }
+
+    @Override
     public void loadMore(Message message) {
-        List<Photo> data = (List<Photo>) message.obj;
-        if(data.size() > 0) {
-            adapter.add(data);
+        if(message.obj != null) {
+            adapter.setData(albumDetail.getAllPics());
         }
     }
 }

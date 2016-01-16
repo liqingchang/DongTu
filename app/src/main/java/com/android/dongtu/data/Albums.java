@@ -10,18 +10,13 @@ import java.util.List;
 public class Albums {
 
     public List<AlbumSummary> albumSummaries;
-    private String lastId;
 
     public Albums(){
         albumSummaries = new ArrayList<>();
     }
 
-    public void setLastId(String lastId) {
-        this.lastId = lastId;
-    }
-
-    public String getLastId(){
-        return lastId;
+    public int getSize(){
+        return albumSummaries.size();
     }
 
 }

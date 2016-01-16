@@ -16,6 +16,9 @@ public class AlbumDetail implements Serializable {
 
     public List<Photo> pics;
 
+    /**
+     * index
+     */
     private int position;
 
     public AlbumDetail() {
@@ -39,8 +42,12 @@ public class AlbumDetail implements Serializable {
         return pics.size();
     }
 
-    public void addPhotos(Photo photo) {
+    public void addPhoto(Photo photo) {
         pics.add(photo);
+    }
+
+    public void addAllPhoto(List<Photo> photos) {
+        pics.addAll(photos);
     }
 
     public List<Photo> getPics(int startPosition, int count) {

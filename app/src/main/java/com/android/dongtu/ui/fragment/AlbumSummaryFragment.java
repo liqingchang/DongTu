@@ -25,10 +25,10 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
     public Object load() {
         isLoading = true;
         Object object;
-        if (lastData != null && lastData instanceof Albums) {
-            object = abstractLoader.loadAlbumSummary(((Albums) lastData).getLastId());
+        if(adapter.getItemCount() != 0) {
+            object = abstractLoader.loadAlbumSummary(adapter.getItemCount());
         } else {
-            object = abstractLoader.loadAlbumSummary(null);
+            object = abstractLoader.loadAlbumSummary();
         }
         isLoading = false;
         return object;
@@ -59,7 +59,7 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
     public void loadMore(Message message) {
         if (!isLoading && message.obj != null) {
             Albums albums = (Albums) message.obj;
-            if(lastData!= null && albums.getLastId().equals(((Albums)lastData).getLastId())) {
+            if(albums.getSize() == 0) {
                 return;
             }
             lastData = albums;

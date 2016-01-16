@@ -17,8 +17,8 @@ public class RandomFragment extends AbstractDetailFragment{
     }
 
     @Override
-    public AlbumDetail initAlbum() {
-        return PhotoManager.getInstance().getAllLike();
+    public AlbumDetail loadAlbum(int skip, int max) {
+        return PhotoManager.getInstance().getRandom(skip, max);
     }
 
 }

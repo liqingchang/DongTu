@@ -20,6 +20,7 @@ import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumSummaryAdapter;
 import com.android.dongtu.data.AbstractLoader;
 import com.android.dongtu.data.BaseLoader;
+import com.android.dongtu.util.Logger;
 
 import java.lang.ref.WeakReference;
 
@@ -41,6 +42,13 @@ public abstract class AbstractAlbumFragment extends Fragment {
     private AlbumFragmentHandler handler;
     private GridLayoutManager gridLayoutManager;
     private float space;
+
+    private static final String LOCK = new String();
+
+    private boolean isActive = false;
+
+    protected boolean isNoMore= false;
+
     /**
      * 是否加载中,避免多次加载
      */
@@ -48,8 +56,12 @@ public abstract class AbstractAlbumFragment extends Fragment {
     private Runnable loadMoreRunnable = new Runnable() {
         @Override
         public void run() {
+            isLoading = true;
             Message message = handler.obtainMessage();
-            message.obj = load();
+            synchronized (LOCK) {
+                message.obj = load();
+            }
+            isLoading = false;
             message.what = MSG_LOADMORE;
             handler.sendMessage(message);
         }
@@ -91,6 +103,19 @@ public abstract class AbstractAlbumFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        isActive = true;
+        ThreadManager.runBg(loadMoreRunnable);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isActive = false;
+    }
+
     private void init(View view) {
         gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         revAlbum = (RecyclerView) view.findViewById(R.id.rev_pics);
@@ -102,11 +127,13 @@ public abstract class AbstractAlbumFragment extends Fragment {
         });
         revAlbum.setAdapter(adapter);
         revAlbum.setLayoutManager(gridLayoutManager);
-        revAlbum.addItemDecoration(new GridSpacingItemDecoration(2, (int)space , false));
+        revAlbum.addItemDecoration(new GridSpacingItemDecoration(2, (int) space, false));
         afterInit(view);
         // 加载一次数据
         ThreadManager.runBg(loadMoreRunnable);
     }
+
+    int count;
 
     /**
      * 判断是否需要加载更多数据
@@ -114,9 +141,10 @@ public abstract class AbstractAlbumFragment extends Fragment {
     protected void getMoreImagesIfNeeded(int position, int totalItemCount) {
         int defaultNumberOfItemsPerPage = abstractLoader.getDefaultCount();
         boolean shouldLoadMore = position >= totalItemCount - (defaultNumberOfItemsPerPage / 2);
-        if (shouldLoadMore && !isLoading && adapter != null && adapter.getItemCount() > 0) {
+        if (shouldLoadMore && !isLoading && adapter != null && adapter.getItemCount() > 0 && isActive & !isNoMore) {
             // 获取更多数据
             ThreadManager.runBg(loadMoreRunnable);
+            Logger.i("terry", "thread count:" + ++count + " | position:" + position + " totalItemCount:" + totalItemCount);
         }
     }
 
