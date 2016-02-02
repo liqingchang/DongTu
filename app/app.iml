@@ -98,6 +98,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="material-menu-1.5.1" level="project" />
+    <orderEntry type="library" exported="" name="beacon_android_2.1.5" level="project" />
     <orderEntry type="library" exported="" name="material-menu-toolbar-1.5.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="cube-sdk-1.0.44.33-SNAPSHOT" level="project" />

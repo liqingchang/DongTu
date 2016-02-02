@@ -1,12 +1,12 @@
 package com.android.dongtu.app;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.android.dongtu.util.IdUtil;
 import com.android.dongtu.util.Logger;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.tencent.beacon.event.UserAction;
 
 import java.util.UUID;
 
@@ -29,5 +29,6 @@ public class App extends Application {
         UUID uuid = IdUtil.getUUID(this);
         Logger.i(uuid.toString());
         sApp = this;
+        UserAction.initUserAction(this);
     }
 }

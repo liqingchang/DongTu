@@ -9,8 +9,11 @@
     <color name="Purple.Dark">#673ab7</color>
     <color name="Grey.Light">#eee</color>
 
+    <color name="Pink.Primary">#FD8CAC</color>
+    <color name="Pink.Dark">#ff3379</color>
+
     <!--主色调定义-->
-    <color name="colorPrimary">@color/Purple</color>
-    <color name="colorPrimaryDark">@color/Purple.Dark</color>
+    <color name="colorPrimary">@color/Pink.Primary</color>
+    <color name="colorPrimaryDark">@color/Pink.Dark</color>
 
 </resources>

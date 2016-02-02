@@ -66,7 +66,6 @@ public class AlbumDetailAdapter extends AbstractAlbumAdapter {
     @Override
     public <T> void setData(List<T> data) {
         this.data = (List<Photo>)data;
-        notifyDataSetChanged();
     }
 
     @Override

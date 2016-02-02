@@ -51,22 +51,26 @@ public abstract class AbstractDetailFragment extends AbstractAlbumFragment {
 
     @Override
     public Object load() {
+        AlbumDetail detail;
         if(albumDetail == null) { // 初始化数据
             albumDetail = loadAlbum(0, abstractLoader.getDefaultCount());
+            detail = albumDetail;
         } else {
-            AlbumDetail detail = loadAlbum(albumDetail.getSize(), abstractLoader.getDefaultCount());
+            detail = loadAlbum(albumDetail.getSize(), abstractLoader.getDefaultCount());
             albumDetail.addAllPhoto(detail.getAllPics());
             if(detail.getSize() == 0) {
                 isNoMore = true;
             }
         }
-        return albumDetail;
+        return detail;
     }
 
     @Override
     public void loadMore(Message message) {
         if(message.obj != null) {
             adapter.setData(albumDetail.getAllPics());
+            AlbumDetail detail = (AlbumDetail)message.obj;
+            adapter.notifyItemRangeInserted(albumDetail.getPosition() - detail.getPosition(), detail.getSize());
         }
     }
 }
