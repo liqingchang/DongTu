@@ -38,12 +38,9 @@ public abstract class AbstractAlbumFragment extends Fragment {
     protected AbstractAlbumAdapter adapter;
     protected AbstractLoader abstractLoader;
     protected FragmentCallback callback;
-    protected Object lastData;
     private AlbumFragmentHandler handler;
     private GridLayoutManager gridLayoutManager;
     private float space;
-
-    private static final String LOCK = new String();
 
     private boolean isActive = false;
 
@@ -58,9 +55,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
         public void run() {
             isLoading = true;
             Message message = handler.obtainMessage();
-            synchronized (LOCK) {
-                message.obj = load();
-            }
+            message.obj = load();
             isLoading = false;
             message.what = MSG_LOADMORE;
             handler.sendMessage(message);
@@ -122,6 +117,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
         adapter.setOnGetViewListener(new AlbumSummaryAdapter.OnGetViewListener() {
             @Override
             public void onBindView(int position) {
+                Logger.i("terry", "onBindView position:" + position + " | total:" + adapter.getItemCount());
                 getMoreImagesIfNeeded(position, adapter.getItemCount());
             }
         });
@@ -134,6 +130,7 @@ public abstract class AbstractAlbumFragment extends Fragment {
     }
 
     int count;
+    private int lastTotalCount = 0;
 
     /**
      * 判断是否需要加载更多数据
@@ -141,10 +138,11 @@ public abstract class AbstractAlbumFragment extends Fragment {
     protected void getMoreImagesIfNeeded(int position, int totalItemCount) {
         int defaultNumberOfItemsPerPage = abstractLoader.getDefaultCount();
         boolean shouldLoadMore = position >= totalItemCount - (defaultNumberOfItemsPerPage / 2);
-        if (shouldLoadMore && !isLoading && adapter != null && adapter.getItemCount() > 0 && isActive & !isNoMore) {
+        if (shouldLoadMore && !isLoading && adapter != null && adapter.getItemCount() > 0 && isActive && !isNoMore && totalItemCount != lastTotalCount) {
+            Logger.i("terry", "LOAD MORE AT " + getClass().getSimpleName() + " thread count:" + ++count + " | position:" + position + " totalItemCount:" + totalItemCount);
+            lastTotalCount = totalItemCount;
             // 获取更多数据
             ThreadManager.runBg(loadMoreRunnable);
-            Logger.i("terry", "thread count:" + ++count + " | position:" + position + " totalItemCount:" + totalItemCount);
         }
     }
 

@@ -45,11 +45,11 @@ public class SmartFragmentPagerAdapter extends SmartFragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return TopFragment.instance();
+                return RandomFragment.instance();
             case 1:
                 return AlbumSummaryFragment.instance();
             case 2:
-                return RandomFragment.instance();
+                return TopFragment.instance();
             case 3:
                 return LikeFragment.instance();
             default:

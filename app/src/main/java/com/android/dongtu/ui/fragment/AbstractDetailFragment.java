@@ -10,6 +10,7 @@ import com.android.dongtu.R;
 import com.android.dongtu.adapter.AbstractAlbumAdapter;
 import com.android.dongtu.adapter.AlbumDetailAdapter;
 import com.android.dongtu.data.AlbumDetail;
+import com.android.dongtu.util.Logger;
 
 /**
  * 排列显示单张图片抽象类
@@ -68,9 +69,12 @@ public abstract class AbstractDetailFragment extends AbstractAlbumFragment {
     @Override
     public void loadMore(Message message) {
         if(message.obj != null) {
+            int startPosition = adapter.getItemCount();
             adapter.setData(albumDetail.getAllPics());
             AlbumDetail detail = (AlbumDetail)message.obj;
-            adapter.notifyItemRangeInserted(albumDetail.getPosition() - detail.getPosition(), detail.getSize());
+            Logger.i("terry" ," LOAD MORE MESSAGE position " + startPosition + " | size:" + detail.getSize());
+            adapter.notifyItemRangeInserted(startPosition, detail.getSize());
+//            adapter.notifyDataSetChanged();
         }
     }
 }

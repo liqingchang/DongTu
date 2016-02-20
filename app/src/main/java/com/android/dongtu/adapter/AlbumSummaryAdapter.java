@@ -1,12 +1,7 @@
 package com.android.dongtu.adapter;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.android.dongtu.R;
 import com.android.dongtu.data.AlbumSummary;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -17,6 +12,7 @@ import java.util.List;
 import in.srain.cube.util.LocalDisplay;
 
 /**
+ * 专辑索引适配器
  * Created by kuroterry on 15/12/2.
  */
 public class AlbumSummaryAdapter extends AbstractAlbumAdapter {
@@ -54,13 +50,11 @@ public class AlbumSummaryAdapter extends AbstractAlbumAdapter {
         for(int i = 0 ; i < data.size(); i++) {
             this.data.add((AlbumSummary) data.get(i));
         }
-        notifyDataSetChanged();
     }
 
     @Override
     public <T> void setData(List<T> data) {
         this.data = (List<AlbumSummary>)data;
-        notifyDataSetChanged();
     }
 
     @Override

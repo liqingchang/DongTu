@@ -12,26 +12,16 @@ import com.android.dongtu.data.Albums;
 import java.util.List;
 
 /**
+ * 专辑索引页面
  * Created by kuroterry on 15/12/2.
  */
 public class AlbumSummaryFragment extends AbstractAlbumFragment {
 
+    private Albums albums;
+
     public static AlbumSummaryFragment instance(){
         AlbumSummaryFragment fragment = new AlbumSummaryFragment();
         return fragment;
-    }
-
-    @Override
-    public Object load() {
-        isLoading = true;
-        Object object;
-        if(adapter.getItemCount() != 0) {
-            object = abstractLoader.loadAlbumSummary(adapter.getItemCount());
-        } else {
-            object = abstractLoader.loadAlbumSummary();
-        }
-        isLoading = false;
-        return object;
     }
 
     @Override
@@ -56,15 +46,25 @@ public class AlbumSummaryFragment extends AbstractAlbumFragment {
     }
 
     @Override
+    public Object load() {
+        Albums loadAlbums;
+        if(albums == null) {
+            albums = abstractLoader.loadAlbumSummary(0, abstractLoader.getDefaultCount());
+            loadAlbums = albums;
+        } else {
+            loadAlbums = abstractLoader.loadAlbumSummary(albums.getSize(), abstractLoader.getDefaultCount());
+            albums.addAllAlbums(loadAlbums);
+        }
+        return loadAlbums;
+    }
+
+    @Override
     public void loadMore(Message message) {
-        if (!isLoading && message.obj != null) {
-            Albums albums = (Albums) message.obj;
-            if(albums.getSize() == 0) {
-                return;
-            }
-            lastData = albums;
-            List<AlbumSummary> data = albums.albumSummaries;
-            adapter.add(data);
+        if (message.obj != null) {
+            int startPosition = adapter.getItemCount();
+            adapter.setData(albums.getAllAlbumSummaris());
+            Albums loadAlbums = (Albums) message.obj;
+            adapter.notifyItemRangeInserted(startPosition, loadAlbums.getSize());
         }
     }
 

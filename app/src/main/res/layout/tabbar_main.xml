@@ -27,15 +27,15 @@
                                        dongtu:tabBarSize="2dp">
 
     <com.android.dongtu.ui.view.TabView
-            android:id="@+id/tab_toplist"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:background="@drawable/default_selector"
-            android:contentDescription="@string/title_section_toplist"
-            dongtu:src="@mipmap/ic_action_toplist"
-            dongtu:text="@string/title_section_toplist"
-            />
+        android:id="@+id/tab_random"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:background="@drawable/default_selector"
+        android:contentDescription="@string/title_section_random"
+        dongtu:src="@mipmap/ic_action_random"
+        dongtu:text="@string/title_section_random"
+        />
 
     <com.android.dongtu.ui.view.TabView
         android:id="@+id/tab_latest"
@@ -49,15 +49,15 @@
         />
 
     <com.android.dongtu.ui.view.TabView
-            android:id="@+id/tab_random"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:background="@drawable/default_selector"
-            android:contentDescription="@string/title_section_random"
-            dongtu:src="@mipmap/ic_action_random"
-            dongtu:text="@string/title_section_random"
-            />
+        android:id="@+id/tab_toplist"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:background="@drawable/default_selector"
+        android:contentDescription="@string/title_section_toplist"
+        dongtu:src="@mipmap/ic_action_toplist"
+        dongtu:text="@string/title_section_toplist"
+        />
 
     <com.android.dongtu.ui.view.TabView
             android:id="@+id/tab_saved"

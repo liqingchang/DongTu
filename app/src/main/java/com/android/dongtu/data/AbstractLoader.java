@@ -19,6 +19,10 @@ public abstract class AbstractLoader {
 
     public abstract AlbumDetail loadAlbumDetail(AlbumSummary albumSummary);
 
+    public abstract AlbumDetail loadAlbumDetail(AlbumSummary albumSummary, int skip, int max);
+
+    public abstract AlbumDetail loadAlbumDetail(AlbumSummary albumSummary, int skip);
+
     public abstract boolean setLike(Photo photo);
 
     public abstract AlbumDetail loadLike();

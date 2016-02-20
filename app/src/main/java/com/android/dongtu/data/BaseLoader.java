@@ -52,7 +52,7 @@ public class BaseLoader extends AbstractLoader {
                     albumSummary.model = jsonAlbum.getString("models");
                     albumSummaries.add(albumSummary);
                 }
-                albums.albumSummaries = albumSummaries;
+                albums.setAllAlbumSummaries(albumSummaries);
                 return albums;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -97,7 +97,7 @@ public class BaseLoader extends AbstractLoader {
                     albumSummary.model = jsonAlbum.getString("models");
                     albumSummaries.add(albumSummary);
                 }
-                albums.albumSummaries = albumSummaries;
+                albums.setAllAlbumSummaries(albumSummaries);
                 return albums;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -108,7 +108,17 @@ public class BaseLoader extends AbstractLoader {
 
     @Override
     public AlbumDetail loadAlbumDetail(AlbumSummary albumSummary) {
-        String url = String.format(ALBUM_DETAIL_URL, albumSummary.press, albumSummary.name, IdUtil.getUUID(App.sApp), OS, 0, 0);
+        return loadAlbumDetail(albumSummary, 0, getDefaultCount());
+    }
+
+    @Override
+    public AlbumDetail loadAlbumDetail(AlbumSummary albumSummary, int skip) {
+        return loadAlbumDetail(albumSummary, skip, getDefaultCount());
+    }
+
+    @Override
+    public AlbumDetail loadAlbumDetail(AlbumSummary albumSummary, int skip, int max) {
+        String url = String.format(ALBUM_DETAIL_URL, albumSummary.press, albumSummary.name, IdUtil.getUUID(App.sApp), OS, skip,max);
         AlbumDetail albumDetail = new AlbumDetail(albumSummary);
         String jsonString = HttpUtil.get(url);
         Logger.i("terry", "photo json:" + jsonString);

@@ -26,17 +26,7 @@ public class AlbumDetailFragment extends AbstractDetailFragment {
 
     @Override
     public AlbumDetail loadAlbum(int skip, int max) {
-        return abstractLoader.loadAlbumDetail(albumSummary);
-    }
-
-    @Override
-    public Object load() {
-        if (albumDetail == null) {
-            albumDetail = loadAlbum(0, abstractLoader.getDefaultCount());
-            return albumDetail.getPics(0);
-        } else {
-            return albumDetail.getPics(albumDetail.getPosition());
-        }
+        return abstractLoader.loadAlbumDetail(albumSummary, skip, max);
     }
 
     @Override

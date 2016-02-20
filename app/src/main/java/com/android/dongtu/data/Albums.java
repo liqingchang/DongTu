@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Albums {
 
-    public List<AlbumSummary> albumSummaries;
+    private List<AlbumSummary> albumSummaries;
 
     public Albums(){
         albumSummaries = new ArrayList<>();
@@ -17,6 +17,18 @@ public class Albums {
 
     public int getSize(){
         return albumSummaries.size();
+    }
+
+    public void addAllAlbums(Albums albums) {
+        albumSummaries.addAll(albums.getAllAlbumSummaris());
+    }
+
+    public List<AlbumSummary> getAllAlbumSummaris(){
+        return albumSummaries;
+    }
+
+    public void setAllAlbumSummaries(List<AlbumSummary> summaries){
+        albumSummaries = summaries;
     }
 
 }
