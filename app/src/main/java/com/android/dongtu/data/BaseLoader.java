@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 基本数据加载类
  * Created by kuroterry on 15/11/28.
  */
-public class BaseLoader extends AbstractLoader {
+public class BaseLoader extends AbstractLoader implements ISubject{
 
     public static final String BASE_URL = "http://4gun.net/api/v1";
     public static final String ALBUM_URL = BASE_URL + "/albums?uid=%1$s&os=%2$s&skip=%3$s&max=%4$s";
@@ -29,6 +30,8 @@ public class BaseLoader extends AbstractLoader {
 
     public static final String LIKE_SUCCESS = "success";
     public static final String OS = "android";
+
+    public static List<IObserver> observers = new ArrayList<>();
 
 
     @Override
@@ -153,6 +156,7 @@ public class BaseLoader extends AbstractLoader {
             JSONObject jsonObject = new JSONObject(json);
             String isSuccess = jsonObject.getString("status");
             if (isSuccess.contains(LIKE_SUCCESS)) {
+                notifyUpdate();
                 return true;
             } else {
                 return false;
@@ -240,6 +244,23 @@ public class BaseLoader extends AbstractLoader {
             Logger.e(e.toString());
         }
         return albumDetail;
+    }
+
+    @Override
+    public void addObserver(IObserver iObserver) {
+        observers.add(iObserver);
+    }
+
+    @Override
+    public void removeObserver(IObserver iObserver) {
+        observers.remove(iObserver);
+    }
+
+    @Override
+    public void notifyUpdate() {
+        for(IObserver iObserver : observers) {
+            iObserver.update();
+        }
     }
 
 }

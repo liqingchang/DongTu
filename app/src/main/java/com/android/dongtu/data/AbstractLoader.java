@@ -3,7 +3,7 @@ package com.android.dongtu.data;
 /**
  * Created by kuroterry on 15/11/28.
  */
-public abstract class AbstractLoader {
+public abstract class AbstractLoader implements ISubject{
 
     private static final int DEFAULT_COUNT = 8;
 

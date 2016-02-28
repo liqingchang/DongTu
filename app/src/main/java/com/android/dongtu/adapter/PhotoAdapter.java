@@ -15,7 +15,6 @@ import com.android.dongtu.R;
 import com.android.dongtu.ThreadManager;
 import com.android.dongtu.data.Photo;
 import com.android.dongtu.data.PhotoManager;
-import com.android.dongtu.ui.fragment.AbstractAlbumFragment;
 import com.android.dongtu.util.Logger;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

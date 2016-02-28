@@ -7,6 +7,7 @@ import com.android.dongtu.util.Logger;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.tencent.beacon.event.UserAction;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.UUID;
 
@@ -30,5 +31,7 @@ public class App extends Application {
         Logger.i(uuid.toString());
         sApp = this;
         UserAction.initUserAction(this);
+        
+        CrashReport.initCrashReport(getApplicationContext(), "900020918", false);
     }
 }

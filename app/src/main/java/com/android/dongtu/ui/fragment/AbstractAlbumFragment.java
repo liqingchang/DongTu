@@ -129,6 +129,11 @@ public abstract class AbstractAlbumFragment extends Fragment {
         ThreadManager.runBg(loadMoreRunnable);
     }
 
+    protected void reload(){
+        // 加载一次数据
+        ThreadManager.runBg(loadMoreRunnable);
+    }
+
     int count;
     private int lastTotalCount = 0;
 
