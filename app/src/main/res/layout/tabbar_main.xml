@@ -16,7 +16,7 @@
   ~ limitations under the License.
   -->
 
-<com.android.dongtu.ui.view.TabBarView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.jellyape.dongtu.ui.view.TabBarView xmlns:android="http://schemas.android.com/apk/res/android"
                                        xmlns:dongtu="http://schemas.android.com/apk/res-auto"
                                        android:layout_width="wrap_content"
                                        android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
                                        dongtu:tabBarColor="@color/Grey.Light"
                                        dongtu:tabBarSize="2dp">
 
-    <com.android.dongtu.ui.view.TabView
+    <com.jellyape.dongtu.ui.view.TabView
         android:id="@+id/tab_random"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -37,7 +37,7 @@
         dongtu:text="@string/title_section_random"
         />
 
-    <com.android.dongtu.ui.view.TabView
+    <com.jellyape.dongtu.ui.view.TabView
         android:id="@+id/tab_latest"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -48,7 +48,7 @@
         dongtu:text="@string/title_section_latest"
         />
 
-    <com.android.dongtu.ui.view.TabView
+    <com.jellyape.dongtu.ui.view.TabView
         android:id="@+id/tab_toplist"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -59,7 +59,7 @@
         dongtu:text="@string/title_section_toplist"
         />
 
-    <com.android.dongtu.ui.view.TabView
+    <com.jellyape.dongtu.ui.view.TabView
             android:id="@+id/tab_saved"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -70,4 +70,4 @@
             dongtu:text="@string/title_section_saved"
             />
 
-</com.android.dongtu.ui.view.TabBarView>
+</com.jellyape.dongtu.ui.view.TabBarView>
