@@ -4,6 +4,7 @@ import com.jellyape.dongtu.app.App;
 import com.jellyape.dongtu.http.HttpUtil;
 import com.jellyape.dongtu.util.IdUtil;
 import com.jellyape.dongtu.util.Logger;
+import com.jellyape.dongtu.util.VersionUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,17 +17,17 @@ import java.util.List;
  * 基本数据加载类
  * Created by kuroterry on 15/11/28.
  */
-public class BaseLoader extends AbstractLoader implements ISubject{
+public class BaseLoader extends AbstractLoader implements ISubject {
 
     public static final String BASE_URL = "http://4gun.net/api/v1";
-    public static final String ALBUM_URL = BASE_URL + "/albums?uid=%1$s&os=%2$s&skip=%3$s&max=%4$s";
-    public static final String ALBUM_DETAIL_URL = BASE_URL + "/photos?press=%1$s&album_name=%2$s&uid=%3$s&os=%4$s&skip=%5$s&max=%6$s";
+    public static final String ALBUM_URL = BASE_URL + "/albums?uid=%1$s&os=%2$s&skip=%3$s&max=%4$s&ver=" + VersionUtil.getVersionName(App.sApp);
+    public static final String ALBUM_DETAIL_URL = BASE_URL + "/photos?press=%1$s&album_name=%2$s&uid=%3$s&os=%4$s&skip=%5$s&max=%6$s&ver=" + VersionUtil.getVersionName(App.sApp);
     public static final String ALBUM_LASTID = "?beg_id=";
-    public static final String SET_LIKE = BASE_URL + "/user/like?uid=%1$s&photo_id=%2$s&os=%3$s";
-    public static final String LIKE = BASE_URL + "/user/liked_photos?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s";
+    public static final String SET_LIKE = BASE_URL + "/user/like?uid=%1$s&photo_id=%2$s&os=%3$s&ver=" + VersionUtil.getVersionName(App.sApp);
+    public static final String LIKE = BASE_URL + "/user/liked_photos?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s&ver=" + VersionUtil.getVersionName(App.sApp);
 
-    public static final String RANDOM = BASE_URL + "/random?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s";
-    public static final String RANK = BASE_URL + "/ranking?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s";
+    public static final String RANDOM = BASE_URL + "/random?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s&ver=" + VersionUtil.getVersionName(App.sApp);
+    public static final String RANK = BASE_URL + "/ranking?uid=%1$s&skip=%2$s&max=%3$s&os=%4$s&ver=" + VersionUtil.getVersionName(App.sApp);
 
     public static final String LIKE_SUCCESS = "success";
     public static final String OS = "android";
@@ -121,7 +122,7 @@ public class BaseLoader extends AbstractLoader implements ISubject{
 
     @Override
     public AlbumDetail loadAlbumDetail(AlbumSummary albumSummary, int skip, int max) {
-        String url = String.format(ALBUM_DETAIL_URL, albumSummary.press, albumSummary.name, IdUtil.getUUID(App.sApp), OS, skip,max);
+        String url = String.format(ALBUM_DETAIL_URL, albumSummary.press, albumSummary.name, IdUtil.getUUID(App.sApp), OS, skip, max);
         AlbumDetail albumDetail = new AlbumDetail(albumSummary);
         String jsonString = HttpUtil.get(url);
         Logger.i("terry", "photo json:" + jsonString);
@@ -203,7 +204,7 @@ public class BaseLoader extends AbstractLoader implements ISubject{
 
     @Override
     public AlbumDetail loadRandom(int skip, int max) {
-        String url = String.format(RANDOM, IdUtil.getUUID(App.sApp), skip , max , OS);
+        String url = String.format(RANDOM, IdUtil.getUUID(App.sApp), skip, max, OS);
         return load(url);
     }
 
@@ -223,7 +224,7 @@ public class BaseLoader extends AbstractLoader implements ISubject{
     }
 
 
-    private AlbumDetail load(String url){
+    private AlbumDetail load(String url) {
         AlbumDetail albumDetail = new AlbumDetail();
         String json = HttpUtil.get(url);
         Logger.i("terry", "load " + url);
@@ -258,7 +259,7 @@ public class BaseLoader extends AbstractLoader implements ISubject{
 
     @Override
     public void notifyUpdate() {
-        for(IObserver iObserver : observers) {
+        for (IObserver iObserver : observers) {
             iObserver.update();
         }
     }
