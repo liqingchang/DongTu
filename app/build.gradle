@@ -20,7 +20,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.jellyape.dongtu"
+        applicationId "com.jellyape.dongtushe"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 7
