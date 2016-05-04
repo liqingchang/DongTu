@@ -4,16 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
-import android.widget.AdapterView;
 
-import com.android.dongtu.adapter.AlbumDetailAdapter;
-import com.android.dongtu.data.AlbumDetail;
+import com.android.dongtu.adapter.AlbumSummaryAdapter;
 import com.android.dongtu.data.AlbumSummary;
 
 import java.util.List;
 
 /**
- * Created by kuroterry on 15/11/30.
+ * Created by kuroterry on 15/12/2.
  */
 public class AlbumDetailFragment extends AbstractAlbumFragment {
 
@@ -40,29 +38,26 @@ public class AlbumDetailFragment extends AbstractAlbumFragment {
 
     @Override
     public Object load() {
-        return iLoader.loadAlbumDetail(albumSummary);
+        isLoading = true;
+        Object object = abstractLoader.loadAlbumDetail(albumSummary);
+        isLoading = false;
+        return object;
     }
 
     @Override
     public void initAdapter() {
-        adapter = new AlbumDetailAdapter();
+        adapter = new AlbumSummaryAdapter();
     }
 
     @Override
     public void afterInit(View view) {
-        grvPics.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            }
-        });
     }
 
     @Override
     public void loadMore(Message message) {
-        AlbumDetail albumDetail = (AlbumDetail) message.obj;
-        List<String> data = albumDetail.getPics();
+        List<AlbumSummary> data = (List<AlbumSummary>) message.obj;
         adapter.add(data);
-        loadMoreContainer.loadMoreFinish(true, false);
     }
+
 }
