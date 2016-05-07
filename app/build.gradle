@@ -39,7 +39,7 @@ android {
     buildTypes {
         release {
             signingConfigs.release
-            debuggable false
+            debuggable true
             signingConfig signingConfigs.release
             minifyEnabled false
             zipAlignEnabled true

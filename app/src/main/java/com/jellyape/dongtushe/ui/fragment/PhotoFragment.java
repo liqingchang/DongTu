@@ -50,7 +50,7 @@ public class PhotoFragment extends Fragment {
             data = (AlbumDetail) args.getSerializable(ARG_DATA);
             position = args.getInt(ARG_POSITION);
         }
-        adapter = new PhotoAdapter(data.getAllPics());
+        adapter = new PhotoAdapter(context, data.getAllPics());
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.bg_gray)
 //                .showImageForEmptyUri(R.drawable.ic_empty)

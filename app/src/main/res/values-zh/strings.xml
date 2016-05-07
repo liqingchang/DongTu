@@ -17,4 +17,7 @@
     <string name="title_section_random">Random</string>
     <string name="title_section_saved">Saved</string>
     <string name="title_section_latest">New</string>
+
+    <string name="share_to">分享到</string>
+    <string name="share_from">来自应用:</string>
 </resources>

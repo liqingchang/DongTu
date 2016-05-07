@@ -21,11 +21,24 @@ public class Photo implements Serializable {
      */
     public boolean isFavorite;
 
+    public String model;
+
+    public String name;
+
+    public Photo(String id, String url, boolean isFavorite, String model, String name) {
+        this.id = id;
+        this.url = url;
+        this.isFavorite = isFavorite;
+        this.model = model;
+        this.name = name;
+    }
+
     public Photo(String id, String url, boolean isFavorite) {
         this.id = id;
         this.url = url;
         this.isFavorite = isFavorite;
+        this.model = model;
+        this.name = name;
     }
-
 
 }

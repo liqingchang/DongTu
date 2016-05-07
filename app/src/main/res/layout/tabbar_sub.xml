@@ -15,4 +15,20 @@
         android:padding="8dp"
         />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/default_selector"
+        android:contentDescription="@string/back"
+        android:src="@mipmap/ic_share_white_36dp"
+        android:padding="8dp"
+        />
+
 </LinearLayout>
